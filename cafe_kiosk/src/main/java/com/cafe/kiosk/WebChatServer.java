@@ -22,20 +22,20 @@ public class WebChatServer extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private static Map<Session, ChatClient> users = Collections.synchronizedMap(new HashMap<Session, ChatClient>());
+	private static Session session;
 
 	@OnMessage
 	public void onMsg(String message, Session session) throws IOException {
 		String userName = users.get(session).getName();
-		System.out.println(userName + " : " + message);
-
+		System.out.println(WebChatServer.session);
 		synchronized (users) {
-			Iterator<Session> it = users.keySet().iterator();
-			while (it.hasNext()) {
-				Session currentSession = it.next();
-				if (!currentSession.equals(session)) {
-					currentSession.getBasicRemote().sendText(userName + " : " + message);
-				}
-			}
+			WebChatServer.session.getBasicRemote().sendText(userName + " : " + message);
+//			Iterator<Session> it = users.keySet().iterator();
+//			while (it.hasNext()) {
+//				Session currentSession = it.next();
+//				if (users.get(currentSession).getName().equals("admin"))
+//					currentSession.getBasicRemote().sendText(userName + " : " + message);
+//			}
 		}
 	}
 
@@ -45,6 +45,8 @@ public class WebChatServer extends HttpServlet {
 		ChatClient client = new ChatClient();
 
 		client.setName(ChatClient.getinstance().getName());
+		if (client.getName().equals("admin"))
+			WebChatServer.session = session;
 
 		System.out.println(session + " connect");
 

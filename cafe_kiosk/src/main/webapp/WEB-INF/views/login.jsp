@@ -1,45 +1,83 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<title>Bootstrap Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
-<link
-	href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css"
-	rel="stylesheet">
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
-body {
-	background: #f8f8f8;
-	padding: 60px 0;
+.row.content {
+	height: 1119px;
+	text-align: center;
+	vertical-align: middle;
 }
 
-#login-form>div {
-	margin: 15px 0;
+footer {
+	background-color: #555;
+	color: white;
+	padding: 15px;
+}
+
+#form {
+	width: 450px;
+	height: 400px;
+	border: 3px solid lightgray;
+	border-radius: 20px;
+	margin: 80px auto;
+	font-size: 24px;
+}
+
+#id {
+	margin: 30px 80px;
+}
+
+#pw {
+	margin: 0px 80px;
+}
+
+#btn {
+	margin-top: 50px;
+	padding: 20px 20px;
+	border-radius: 10px;
+	background-color: #bcaaa4;
 }
 </style>
-<title>Home</title>
 </head>
-<div class="container">
-	<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-		<div class="panel panel-success">
-			<div class="panel-heading">
-				<div class="panel-title">환영합니다!</div>
-			</div>
-			<div class="panel-body">
-				<form id="login-form" method="post" action="/loginProcess.do">
-					<div>
-						<input type="text" name="id" class="form-control" name="아이디 입력"
-							placeholder="Username" autofocus>
+<body>
+
+	<!-- Navigation -->
+	<%@ include file="navbar_admin.jsp"%>
+
+	<div class="container-fluid text-center">
+		<div class="row content">
+			<div class="col-sm-12 text-center">
+				<h1>로그인</h1>
+				<hr>
+
+				<h3>Login coffee shop</h3>
+				<form action="/loginProcess.do" method="post" id="form">
+					<div id="id">
+						ID:<input type="text" placeholder="id" name="id">
 					</div>
-					<div>
-						<button type="submit" class="form-control btn btn-primary">로그인</button>
+					<div id="pw">
+						PW:<input type="password" placeholder="password" name="pw">
 					</div>
+					<input type="submit" value="로그인" id="btn" size="50">
 				</form>
 			</div>
 		</div>
 	</div>
-</div>
+
+	<footer class="container-fluid text-center">
+		<p>Footer Text</p>
+	</footer>
+
+</body>
 </html>

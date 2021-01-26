@@ -23,9 +23,13 @@ public class LoginController {
 	public String loginProcess(@RequestParam String id, HttpServletRequest request) {
 
 		logger.info("Welcome " + id);
-
 		ChatClient.getinstance().setName(id);
-		return "chatpage";
+
+		if (id.equals("admin"))
+			return "admin/oderlist";
+		else
+			return "user/chatpage";
+
 	}
 
 }
