@@ -7,7 +7,6 @@
 <meta charset="utf-8">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
-
 #form {
 	width: 500px;
 	height: 800px;
@@ -39,7 +38,8 @@ img {
 	<hr>
 
 	<h3>메뉴 추가</h3>
-	<form action="admin_menuInsert.do" id="form" method="post" enctype="multipart/form-data">
+	<form action="admin_menuInsert.do" id="form" method="post"
+		enctype="multipart/form-data">
 		<div style="margin: 0 auto;">
 			<p>
 				<img src="" id="loadImg" width="300px" height="300px"
@@ -71,9 +71,8 @@ img {
 					autocomplete="off" required="required">
 			</p>
 			<p>
-				<textarea cols="20" rows="2" wrap="hard" placeholder="comment"
-					style="resize: none;"></textarea>
-				<br> <input type="submit" value="추가" onclick="infoConfirm()">
+				<input type="submit" value="추가" onclick="infoConfirm()">
+			</p>
 		</div>
 	</form>
 </body>
