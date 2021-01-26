@@ -3,9 +3,6 @@
 <%@page import="com.model.dao.MenuDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-	ArrayList<MenuDto> menuDtos = MenuDao.getInstance().allmenu();
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,18 +38,19 @@ img {
 	<h3>메뉴 삭제</h3>
 	<div style="margin: 0 auto;">
 		<%
-			for (MenuDto menu : menuDtos) {
+			ArrayList<MenuDto> menuDtos = MenuDao.getInstance().allmenu();
+		for (MenuDto menu : menuDtos) {
 		%>
 		<form action="admin_menuDelete.do">
 			<div class="menu">
-				<p class="img">
-					<img src="../showImage?key1=<%=menu.getName()%>"/>
+				<p>
+					<img src="../showImage?key1=<%=menu.getName()%>" />
 				</p>
 				<p><%=menu.getName()%></p>
 				<p><%=menu.getPrice()%></p>
 				<p>
-					<input type="submit" value='삭제하기' class="delete">
-					<input type="hidden" value='<%=menu.getFilename()%>' name="name">
+					<input type="submit" value='삭제하기' class="delete"> <input
+						type="hidden" value='<%=menu.getFilename()%>' name="name">
 				</p>
 			</div>
 		</form>

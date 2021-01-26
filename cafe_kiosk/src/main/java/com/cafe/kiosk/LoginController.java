@@ -32,7 +32,7 @@ public class LoginController {
 		if (id.equals("admin"))
 			return "admin/oderlist";
 		else
-			return "user/chatpage";
+			return "user/menu_list";
 	}
 
 	@RequestMapping(value = { "/admin_menuInsert", "/admin_menuDelete", "/admin_menuModify" })

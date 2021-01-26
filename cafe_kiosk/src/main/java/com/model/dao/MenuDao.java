@@ -109,7 +109,7 @@ public class MenuDao extends HttpServlet {
 			File f = new File(uploadPath + "\\" + name);
 			if (f.exists())
 				de = f.delete();
-			
+
 			connection.close();
 			preparedStatement.close();
 		} catch (Exception e) {
@@ -124,6 +124,29 @@ public class MenuDao extends HttpServlet {
 
 		try {
 			String sql = "SELECT * FROM menu";
+			preparedStatement = connection.prepareStatement(sql);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				MenuDto menuDto = new MenuDto();
+				menuDto.setName(resultSet.getString(1));
+				menuDto.setPrice(resultSet.getInt(2));
+				menuDto.setFilename(resultSet.getString(4));
+				menuDto.setStock(resultSet.getInt(5));
+				menus.add(menuDto);
+			}
+			connection.close();
+			preparedStatement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return menus;
+	}
+
+	public ArrayList<MenuDto> allmenuType(String type) {
+		ArrayList<MenuDto> menus = new ArrayList<MenuDto>();
+		getCon();
+		try {
+			String sql = "SELECT * FROM menu where imgname LIKE '"+type+"%'";
 			preparedStatement = connection.prepareStatement(sql);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {

@@ -1,3 +1,6 @@
+<%@page import="com.model.dao.MenuDao"%>
+<%@page import="com.model.dto.MenuDto"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -21,7 +24,6 @@
 * {
 	font-family: hzStyleFont;
 }
-
 
 /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
 .row.content {
@@ -54,6 +56,7 @@ footer {
 		height: auto;
 	}
 }
+
 .menu {
 	width: 200px;
 	height: 300px;
@@ -71,41 +74,36 @@ img {
 	margin-top: 5px;
 	border-radius: 10px;
 }
-
-
-
 </style>
 </head>
 <body>
 
 	<!-- Navigation -->
-<%@ include file="../navbar_admin.jsp"%>
+	<%@ include file="../navbar_admin.jsp"%>
 
 	<div class="container-fluid text-center">
 		<div class="row content">
-			<div class="col-sm-12 text-center" style="margin-left:30px;">
+			<div class="col-sm-12 text-center" style="margin-left: 30px;">
 				<h1>관리자 페이지</h1>
 				<hr>
 				<h3>메뉴 수정</h3>
-				<div class="div_menu">
-
+				<div style="margin: 0 auto;">
 					<%
-						for (int i = 0; i < 20; i++) {
+						ArrayList<MenuDto> menuDtos = MenuDao.getInstance().allmenu();
+					for (MenuDto menu : menuDtos) {
 					%>
-						<div class="menu" onclick="javascript:newin=window.open('about:blank');newin.location.href='admin_menuSelected.jsp'"
-						style="cursor:pointer;">
-							<p class="img">
-								<img src="../img/menuImg/blended_흑임자블렌.jpg" />
+					<form action="admin_menuDelete.do">
+						<div class="menu">
+							<p>
+								<img src="../showImage?key1=<%=menu.getName()%>" />
 							</p>
-							<div class="text-center">
-								<p style="margin:20px;">흑임자 블렌드</p>
-								<p>3000원<p>
-							</div>
+							<p><%=menu.getName()%></p>
+							<p><%=menu.getPrice()%></p>
 						</div>
+					</form>
 					<%
 						}
 					%>
-
 				</div>
 			</div>
 		</div>

@@ -6,6 +6,10 @@
 <title>Bootstrap Example</title>
 <meta charset="utf-8">
 <style>
+* {
+	font-size: 25px;
+}
+
 #navbar {
 	list-style-type: none;
 	margin: 0;
@@ -14,7 +18,7 @@
 	background-color: #D9CDBC;
 }
 
-#navbar > li a {
+#navbar>li a {
 	display: block;
 	color: white;
 	text-align: center;
@@ -22,11 +26,11 @@
 	text-decoration: none;
 }
 
-#navbar > li a:hover {
+#navbar>li a:hover {
 	background-color: #333;
 }
 
-#navbar >li {
+#navbar>li {
 	float: left;
 	text-align: left;
 	padding: 5px;
