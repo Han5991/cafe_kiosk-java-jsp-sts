@@ -1,6 +1,6 @@
 <%@page import="com.model.dto.MenuDto"%>
-<%@page import="java.util.ArrayList"%>
 <%@page import="com.model.dao.MenuDao"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -10,18 +10,8 @@
 <meta charset="utf-8">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
-@font-face {
-	font-family: hzStyleFont;
-	src: url("../font/ImcreSoojin.ttf");
-}
-
 * {
-	font-family: hzStyleFont;
-}
-
-table {
-	margin: 50px 500px 0% 600px;
-	text-align: center;
+	font-size: 25px;
 }
 
 .side {
@@ -35,21 +25,43 @@ table {
 }
 
 img {
-	margin: 0px auto;
+	margin: 0 auto;
 	display: block;
 }
 
-td, th {
-	padding: 50px;
-}
-
 .menu {
-	width: 200px;
+	width: 250px;
 	border: 1px solid lightgray;
 	border-radius: 10px;
-	margin: 30px;
+	margin: 50px;
 	font-size: 24px;
 	float: left;
+	text-align: center;
+}
+
+.menu:active {
+	background-color: lightgray;
+}
+
+#pop {
+	top: 20%;
+	left: 35%;
+	position: absolute;
+	width: 350px;
+	z-index: 5;
+	box-shadow: 0 0 10px rgb(0 0 0/ 50%);
+	background: #fff;
+	border-radius: 10px;
+	text-align: center;
+	padding: 20px;
+	box-sizing: border-box;
+	transition: all 0.5s;
+}
+
+input {
+	width: 200px;
+	border: 0;
+	font-weight: bold;
 	text-align: center;
 }
 </style>
@@ -58,16 +70,47 @@ td, th {
 	<%@ include file="../navbar_user.jsp"%>
 	<div class="side">
 		<input type="button" value="커피" class="show1"> <input
-			type="button" value="티" class="show2"> <input type="button"
+			type="button" value="티" class="show4"> <input type="button"
 			value="음료" class="show3"><br> <input type="button"
-			value="블렌디드" class="show4"> <input type="button" value="디저트"
-			class="show5"> <br> 총 합계 금액 : <br>10000원 <br>
-		<br> <input type="reset" value="메뉴 추가하기" class="btn btn-warning"
-			style="font-size: 30px;"><br> <br> <input
-			type="submit" value="주문 하기" class="btn btn-warning"
-			style="font-size: 30px;">
+			value="블렌디드" class="show2"> <input type="button" value="디저트"
+			class="show5"> <br> 총 합계 금액 : <br>
+		<input type="text" name="sum" value="100000"
+			style="width: 100px; background-color: lightgray;"
+			readonly="readonly">원<br>
+		<div id="oder"></div>
+		<br> <input type="reset" value="메뉴 초기화" style="font-size: 30px;"
+			onclick="reset();"><br> <br> <input type="submit"
+			value="주문 하기" class="btn btn-warning" style="font-size: 30px;">
 	</div>
-	<div style="width: 1500px;">
+	<div style="width: 85%;">
+		<div id="pop">
+			<h2>옵션 선택</h2>
+			<input type="button" value="X" id="exit"
+				style="left: 85%; top: 5%; position: absolute; width: 40px;">
+			<table>
+				<tr>
+					<th>메뉴이름</th>
+				</tr>
+				<tr>
+					<th><img src="" height="200px" width="200px" id="img"><br>
+						<input type="text" readonly="readonly" id="name"><br>
+						<input type="text" readonly="readonly" id="price"></th>
+				</tr>
+				<tr>
+					<th>수량</th>
+				</tr>
+				<tr>
+					<td><input type="button" value="-" name="maineoseu"
+						style="width: 40px;"> <input type="text" value="0"
+						name="quantity" style="text-align: center;" readonly="readonly">
+						<input type="button" value="+" name="plus" style="width: 40px;"></td>
+				</tr>
+				<tr>
+					<td><input type="button" value="추가하기" onclick="add();"></td>
+				</tr>
+			</table>
+		</div>
+
 		<div class="coffee">
 			<%
 				ArrayList<MenuDto> menuDtos1 = MenuDao.getInstance().allmenuType("espresso");
@@ -76,10 +119,16 @@ td, th {
 			<div class="menu">
 				<p>
 					<img src="../showImage?key1=<%=menuDto.getName()%>" height="200px"
-						width="200px">
+						width="200px" name="img">
 				</p>
-				<p><%=menuDto.getName()%></p>
-				<p><%=menuDto.getPrice()%></p>
+				<p>
+					<input value="<%=menuDto.getName()%>" name="name"
+						readonly="readonly">
+				</p>
+				<p>
+					<input value="<%=menuDto.getPrice()%>" name="price"
+						readonly="readonly">
+				</p>
 			</div>
 			<%
 				}
@@ -94,10 +143,16 @@ td, th {
 			<div class="menu">
 				<p>
 					<img src="../showImage?key1=<%=menuDto.getName()%>" height="200px"
-						width="200px">
+						width="200px" name="img">
 				</p>
-				<p><%=menuDto.getName()%></p>
-				<p><%=menuDto.getPrice()%></p>
+				<p>
+					<input value="<%=menuDto.getName()%>" name="name"
+						readonly="readonly">
+				</p>
+				<p>
+					<input value="<%=menuDto.getPrice()%>" name="price"
+						readonly="readonly">
+				</p>
 			</div>
 			<%
 				}
@@ -112,10 +167,16 @@ td, th {
 			<div class="menu">
 				<p>
 					<img src="../showImage?key1=<%=menuDto.getName()%>" height="200px"
-						width="200px">
+						width="200px" name="img">
 				</p>
-				<p><%=menuDto.getName()%></p>
-				<p><%=menuDto.getPrice()%></p>
+				<p>
+					<input value="<%=menuDto.getName()%>" name="name"
+						readonly="readonly">
+				</p>
+				<p>
+					<input value="<%=menuDto.getPrice()%>" name="price"
+						readonly="readonly">
+				</p>
 			</div>
 			<%
 				}
@@ -130,10 +191,16 @@ td, th {
 			<div class="menu">
 				<p>
 					<img src="../showImage?key1=<%=menuDto.getName()%>" height="200px"
-						width="200px">
+						width="200px" name="img">
 				</p>
-				<p><%=menuDto.getName()%></p>
-				<p><%=menuDto.getPrice()%></p>
+				<p>
+					<input value="<%=menuDto.getName()%>" name="name"
+						readonly="readonly">
+				</p>
+				<p>
+					<input value="<%=menuDto.getPrice()%>" name="price"
+						readonly="readonly">
+				</p>
 			</div>
 			<%
 				}
@@ -148,10 +215,16 @@ td, th {
 			<div class="menu">
 				<p>
 					<img src="../showImage?key1=<%=menuDto.getName()%>" height="200px"
-						width="200px">
+						width="200px" name="img">
 				</p>
-				<p><%=menuDto.getName()%></p>
-				<p><%=menuDto.getPrice()%></p>
+				<p>
+					<input value="<%=menuDto.getName()%>" name="name"
+						readonly="readonly">
+				</p>
+				<p>
+					<input value="<%=menuDto.getPrice()%>" name="price"
+						readonly="readonly">
+				</p>
 			</div>
 			<%
 				}
@@ -165,6 +238,7 @@ td, th {
 	$('.etc').hide();
 	$('.tea').hide();
 	$('.dessert').hide();
+	$('#pop').hide();
 
 	$('.show1').click(function() {
 		$('.coffee').show();
@@ -206,5 +280,41 @@ td, th {
 		$('.dessert').show();
 		return false;
 	});
+
+	$('#exit').click(function() {
+		$('#pop').hide();
+	});
+
+	$('input[name=plus]').click(function() {
+		var num = $("input[name=quantity]").val();
+		$("input[name=quantity]").val(++num);
+	});
+
+	$('input[name=maineoseu]').click(function() {
+		var n = $('input[name=maineoseu]').index(this);
+		var num = $("input[name=quantity]").val();
+		if (num > 0) {
+			$("input[name=quantity]").val(--num);
+		}
+	});
+
+	$('.menu').click(function() {
+		var n = $('.menu').index(this);
+		var name = $("input[name=name]:eq(" + n + ")").val();
+		var price = $("input[name=price]:eq(" + n + ")").val();
+		var src = $("img[name=img]:eq(" + n + ")").attr('src');
+		$('#name').val(name);
+		$('#price').val(price);
+		$('#img').attr('src', src);
+		$('#pop').show();
+	});
+	function add() {
+		$('#oder').append('a');
+		$('#pop').hide();
+	};
+	function reset() {
+		$('#oder').text('');
+		$('input[name=sum]').val('0');
+	};
 </script>
 </html>

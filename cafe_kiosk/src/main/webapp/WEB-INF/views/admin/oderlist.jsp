@@ -52,7 +52,6 @@ footer {
 	<h1 style="text-align: center;">주문 관리 페이지</h1>
 	<hr>
 	<ul id="ul">
-
 		<!-- 		<li class="oderNum">주문번호 : <input name="oderNum" type="hidden" -->
 		<!-- 			value=""> <br> 주문시각 : <br>주문상태 : 조리전<br> <input -->
 		<!-- 			type="button" value="주문목록 보기" class="oderdetail"> -->
