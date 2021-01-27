@@ -29,8 +29,7 @@ public class MenuDao extends HttpServlet {
 		return admin;
 	}
 
-	public MenuDao() {
-
+	private MenuDao() {
 	}
 
 	public void getCon() {
@@ -39,6 +38,17 @@ public class MenuDao extends HttpServlet {
 			Context envctx = (Context) initctx.lookup("java:/comp/env");
 			DataSource dataSource = (DataSource) envctx.lookup("jdbc/Oracle11g");
 			connection = dataSource.getConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void close() {
+		try {
+			if (connection != null)
+				connection.close();
+			if (preparedStatement != null)
+				preparedStatement.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -72,24 +82,17 @@ public class MenuDao extends HttpServlet {
 				f.renameTo(fileNew);
 			FileInputStream fis = new FileInputStream(fileNew);
 
-			preparedStatement = connection.prepareStatement("insert into menu values(?,?,?,?,?)");
+			preparedStatement = connection.prepareStatement("insert into menu values(?,?,?,?,0)");
 			preparedStatement.setString(1, name);
 			preparedStatement.setInt(2, price);
 			preparedStatement.setBinaryStream(3, fis, (int) fileNew.length());
 			preparedStatement.setString(4, fileNew.getName());
-			preparedStatement.setInt(5, 0);
 			rownum = preparedStatement.executeUpdate();
+			System.out.println("삽입성공");
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		} finally {
-			try {
-				if (connection != null)
-					connection.close();
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			close();
 		}
 		return rownum;
 	}
@@ -104,7 +107,7 @@ public class MenuDao extends HttpServlet {
 			String sql = "delete from menu where imgname=?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, name);
-			result = preparedStatement.executeUpdate();// 이미 인트 주소가 있으니 재활용 2가 리턴되면 삭제 성공
+			result = preparedStatement.executeUpdate();
 
 			File f = new File(uploadPath + "\\" + name);
 			if (f.exists())
@@ -114,6 +117,8 @@ public class MenuDao extends HttpServlet {
 			preparedStatement.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 		return result;
 	}
@@ -138,6 +143,8 @@ public class MenuDao extends HttpServlet {
 			preparedStatement.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 		return menus;
 	}
@@ -146,7 +153,7 @@ public class MenuDao extends HttpServlet {
 		ArrayList<MenuDto> menus = new ArrayList<MenuDto>();
 		getCon();
 		try {
-			String sql = "SELECT * FROM menu where imgname LIKE '"+type+"%'";
+			String sql = "SELECT * FROM menu where imgname LIKE '" + type + "%'";
 			preparedStatement = connection.prepareStatement(sql);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -161,7 +168,85 @@ public class MenuDao extends HttpServlet {
 			preparedStatement.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 		return menus;
+	}
+
+	public MenuDto oneMenu(String name) {
+		MenuDto menuDto = new MenuDto();
+		getCon();
+		try {
+			String sql = "SELECT * FROM menu where name=?";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, name);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				menuDto.setName(resultSet.getString(1));
+				menuDto.setPrice(resultSet.getInt(2));
+				menuDto.setFilename(resultSet.getString(4));
+				menuDto.setStock(resultSet.getInt(5));
+			}
+
+			connection.close();
+			preparedStatement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		return menuDto;
+	}
+
+	public int updateMenu(HttpServletRequest request) {
+		int result = 0;
+		getCon();
+		MultipartRequest multi = null;
+		int fileSize = 1024 * 1024 * 10;
+		String uploadFile = null;
+		String name = null;
+		String type = null;
+		String filename = null;
+		int rownum = 0;
+		int price = 0;
+		boolean update = false;
+		String uploadPath = "C:\\Users\\admin\\git\\cafe_kiosk\\cafe_kiosk\\src\\main\\webapp\\resources\\img";
+		try {
+			multi = new MultipartRequest(request, uploadPath, fileSize, "UTF-8", new DefaultFileRenamePolicy());
+			name = multi.getParameter("name");
+			price = Integer.parseInt(multi.getParameter("price"));
+			type = multi.getParameter("category");
+			uploadFile = multi.getFilesystemName("image");
+			filename = multi.getParameter("filename");
+
+			File f = new File(uploadPath + "\\" + uploadFile);
+			File fileNew = new File(uploadPath + "\\" + type + uploadFile);
+			if (f.exists())
+				f.renameTo(fileNew);
+			FileInputStream fis = new FileInputStream(fileNew);
+
+			preparedStatement = connection
+					.prepareStatement("UPDATE menu SET name=?, price=?, img=?, imgname=? WHERE imgname=?");
+			preparedStatement.setString(1, name);
+			preparedStatement.setInt(2, price);
+			preparedStatement.setBinaryStream(3, fis, (int) fileNew.length());
+			preparedStatement.setString(4, fileNew.getName());
+			preparedStatement.setString(5, filename);
+			rownum = preparedStatement.executeUpdate();
+			f = new File(uploadPath + "\\" + filename);
+			if (f.exists())
+				update = f.delete();
+
+			if (rownum > 0 && update == true) {
+				System.out.println("수정 성공");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return result;
 	}
 }

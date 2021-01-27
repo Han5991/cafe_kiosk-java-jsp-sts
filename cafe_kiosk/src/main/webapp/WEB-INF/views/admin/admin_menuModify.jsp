@@ -16,45 +16,10 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
-@font-face {
-	font-family: hzStyleFont;
-	src: url("../font/ImcreSoojin.ttf");
-}
-
-* {
-	font-family: hzStyleFont;
-}
-
-/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
 .row.content {
 	height: 1119px;
 	text-align: center;
 	vertical-align: middle;
-}
-
-/* Set gray background color and 100% height */
-.sidenav {
-	padding-top: 20px;
-	background-color: #f1f1f1;
-	height: 100%;
-}
-
-/* Set black background color, white text and some padding */
-footer {
-	background-color: #555;
-	color: white;
-	padding: 0px;
-}
-
-/* On small screens, set height to 'auto' for sidenav and grid */
-@media screen and (max-width: 767px) {
-	.sidenav {
-		height: auto;
-		padding: 15px;
-	}
-	.row.content {
-		height: auto;
-	}
 }
 
 .menu {
@@ -92,13 +57,16 @@ img {
 						ArrayList<MenuDto> menuDtos = MenuDao.getInstance().allmenu();
 					for (MenuDto menu : menuDtos) {
 					%>
-					<form action="admin_menuDelete.do">
+					<form action="admin_menuModify.do">
 						<div class="menu">
 							<p>
 								<img src="../showImage?key1=<%=menu.getName()%>" />
 							</p>
 							<p><%=menu.getName()%></p>
-							<p><%=menu.getPrice()%></p>
+							<p>
+								<input type="submit" value="수정하기">
+							</p>
+							<input type="hidden" name="name" value="<%=menu.getName()%>">
 						</div>
 					</form>
 					<%

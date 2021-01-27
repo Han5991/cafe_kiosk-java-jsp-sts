@@ -67,7 +67,7 @@ td, th {
 			type="submit" value="주문 하기" class="btn btn-warning"
 			style="font-size: 30px;">
 	</div>
-	<div style="width: 2350px;">
+	<div style="width: 1500px;">
 		<div class="coffee">
 			<%
 				ArrayList<MenuDto> menuDtos1 = MenuDao.getInstance().allmenuType("espresso");

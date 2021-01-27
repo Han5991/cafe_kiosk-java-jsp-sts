@@ -35,17 +35,22 @@ public class LoginController {
 			return "user/menu_list";
 	}
 
-	@RequestMapping(value = { "/admin_menuInsert", "/admin_menuDelete", "/admin_menuModify" })
+	@RequestMapping(value = { "/admin_menuInsert", "/admin_menuDelete", "/admin_menuModify", "/admin_menuModify.do" })
 	public String admin(HttpSession session, HttpServletRequest request) {
 		UrlPathHelper urls = new UrlPathHelper();
 		String url = urls.getOriginatingServletPath(request);
 		String returnUrl = "";
 		if ("/admin_menuInsert".equals(url)) {
 			returnUrl = "admin/admin_menuInsert";
+
 		} else if ("/admin_menuDelete".equals(url)) {
 			returnUrl = "admin/admin_menuDelete";
+
 		} else if ("/admin_menuModify".equals(url)) {
 			returnUrl = "admin/admin_menuModify";
+
+		} else if ("/admin_menuModify.do".equals(url)) {
+			returnUrl = "admin/admin_menuModifyOK";
 		}
 		return returnUrl;
 	}
@@ -53,8 +58,10 @@ public class LoginController {
 	@RequestMapping(value = "/admin_menuInsert.do")
 	public String insertmenu(HttpServletRequest request) {
 		int a = MenuDao.getInstance().insertMenu(request);
-		if (a == 1)
+		if (a == 1) {
+			logger.info("삽입 성공");
 			return "user/menu_list";
+		}
 		else
 			return "admin/admin_menuInsert";
 	}
@@ -62,9 +69,23 @@ public class LoginController {
 	@RequestMapping(value = "/admin_menuDelete.do")
 	public String deletemenu(HttpServletRequest request, @RequestParam String name) {
 		int a = MenuDao.getInstance().deleteMenu(name);
-		if (a == 1)
+		
+		if (a == 1) {
+			logger.info("삭제 성공");
 			return "admin/admin_menuDelete";
+		}
 		else
 			return "user/menu_list";
+	}
+
+	@RequestMapping(value = "/admin_menuModifyOK.do")
+	public String updatemenu(HttpServletRequest request) {
+		int a = MenuDao.getInstance().updateMenu(request);
+		if (a == 1) {
+			logger.info("수정 성공");
+			return "user/menu_list";
+		}
+		else
+			return "admin/admin_menuModify";
 	}
 }
