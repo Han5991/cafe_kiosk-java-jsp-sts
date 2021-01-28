@@ -75,11 +75,11 @@ input {
 			type="button" value="티" class="show4"> <input type="button"
 			value="음료" class="show3"><br> <input type="button"
 			value="블렌디드" class="show2"> <input type="button" value="디저트"
-			class="show5"> <br> 총 합계 금액 : <br> <input
-			type="text" name="sum" value="0"
-			style="width: 100px; background-color: lightgray;"
-			readonly="readonly">원<br>
-		<form>
+			class="show5"> <br> 총 합계 금액 : <br>
+		<form action="Cart.do">
+			<input type="text" name="sum" value="0"
+				style="width: 100px; background-color: lightgray;"
+				readonly="readonly">원<br>
 			<div id="oder" style="text-align: left; padding: 10px;"></div>
 
 			<br> <input type="button" value="메뉴 초기화"
@@ -322,6 +322,7 @@ input {
 		var name = "<input value='" + $('#name').val()
 				+ "'name='name'readonly='readonly'>";
 		var sum = $('input[name=sum]').val();
+
 		$('input[name=sum]').val(sum * 1 + (quantity * 1 * price));
 		$('#oder')
 				.append(
@@ -329,7 +330,8 @@ input {
 								+ name
 								+ ' '
 								+ "<input value='"+quantity+"'name='quantity1'readonly='readonly'style='width: 20px'>"
-								+ '<br>');
+								+ '<br>'
+								+ "<input type='hidden'value='"+price+"'name='price'>");
 		$('#pop').hide();
 		$('input[name=quantity]').val(1);
 	};

@@ -34,9 +34,9 @@ public class LoginController {
 		else
 			return "user/menu_list";
 	}
-
-	@RequestMapping(value = { "/admin_menuInsert", "/admin_menuDelete", "/admin_menuModify", "/admin_menuModify.do" })
-	public String admin(HttpSession session, HttpServletRequest request) {
+ 
+	@RequestMapping(value = { "/admin_menuInsert", "/admin_menuDelete", "/admin_menuModify", "/admin_menuModify.do", })
+	public String admin(HttpServletRequest request) {
 		UrlPathHelper urls = new UrlPathHelper();
 		String url = urls.getOriginatingServletPath(request);
 		String returnUrl = "";
@@ -52,6 +52,7 @@ public class LoginController {
 		} else if ("/admin_menuModify.do".equals(url)) {
 			returnUrl = "admin/admin_menuModifyOK";
 		}
+
 		return returnUrl;
 	}
 
@@ -61,20 +62,18 @@ public class LoginController {
 		if (a == 1) {
 			logger.info("삽입 성공");
 			return "user/menu_list";
-		}
-		else
+		} else
 			return "admin/admin_menuInsert";
 	}
 
 	@RequestMapping(value = "/admin_menuDelete.do")
 	public String deletemenu(HttpServletRequest request, @RequestParam String name) {
 		int a = MenuDao.getInstance().deleteMenu(name);
-		
+
 		if (a == 1) {
 			logger.info("삭제 성공");
 			return "admin/admin_menuDelete";
-		}
-		else
+		} else
 			return "user/menu_list";
 	}
 
@@ -84,8 +83,28 @@ public class LoginController {
 		if (a == 1) {
 			logger.info("수정 성공");
 			return "user/menu_list";
-		}
-		else
+		} else
 			return "admin/admin_menuModify";
+	}
+	
+	@RequestMapping(value = { "/Cart.do"})
+	public String user(HttpServletRequest request) {
+		UrlPathHelper urls = new UrlPathHelper();
+		String url = urls.getOriginatingServletPath(request);
+		String returnUrl = "";
+		if ("/Cart.do".equals(url)) {
+			returnUrl = "user/Cart";
+		}
+//		} else if ("/admin_menuDelete".equals(url)) {
+//			returnUrl = "admin/admin_menuDelete";
+//
+//		} else if ("/admin_menuModify".equals(url)) {
+//			returnUrl = "admin/admin_menuModify";
+//
+//		} else if ("/admin_menuModify.do".equals(url)) {
+//			returnUrl = "admin/admin_menuModifyOK";
+//		}
+
+		return returnUrl;
 	}
 }
