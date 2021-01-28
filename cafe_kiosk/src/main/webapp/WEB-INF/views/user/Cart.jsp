@@ -11,6 +11,8 @@ String sum = request.getParameter("sum");
 ArrayList<oderDto> oderDtos = new ArrayList<oderDto>();
 for (int i = 0; i < menu.length; i++)
 	oderDtos.add(new oderDto(menu[i], quantity[i], price[i]));
+session.setAttribute("oderlist", oderDtos);
+session.setAttribute("sum", sum);
 %>
 <!DOCTYPE html>
 <html>
@@ -48,7 +50,8 @@ table {
 	<%@ include file="../navbar_user.jsp"%>
 	<span> 총 합계 금액 : <br><%=sum%>원 <br> <br> <input
 		type="reset" value="메뉴 추가하기" style="font-size: 30px;"><br>
-		<br> <input type="submit" value="주문 하기" style="font-size: 30px;"></span>
+		<br> <input type="button" value="주문 하기" style="font-size: 30px;"
+		onclick="go();"></span>
 	<table>
 		<tr>
 			<td>메뉴</td>
@@ -74,6 +77,10 @@ table {
 			}
 		%>
 	</table>
-
 </body>
+<script type="text/javascript">
+	function go() {
+		location.href = "oder.do";
+	}
+</script>
 </html>

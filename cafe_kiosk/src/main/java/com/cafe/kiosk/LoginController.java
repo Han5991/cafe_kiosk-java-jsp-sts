@@ -34,7 +34,7 @@ public class LoginController {
 		else
 			return "user/menu_list";
 	}
- 
+
 	@RequestMapping(value = { "/admin_menuInsert", "/admin_menuDelete", "/admin_menuModify", "/admin_menuModify.do", })
 	public String admin(HttpServletRequest request) {
 		UrlPathHelper urls = new UrlPathHelper();
@@ -86,18 +86,17 @@ public class LoginController {
 		} else
 			return "admin/admin_menuModify";
 	}
-	
-	@RequestMapping(value = { "/Cart.do"})
+
+	@RequestMapping(value = { "/Cart.do","/oder.do" })
 	public String user(HttpServletRequest request) {
 		UrlPathHelper urls = new UrlPathHelper();
 		String url = urls.getOriginatingServletPath(request);
 		String returnUrl = "";
 		if ("/Cart.do".equals(url)) {
 			returnUrl = "user/Cart";
+		} else if ("/oder.do".equals(url)) {
+			returnUrl = "user/Payment_Result";
 		}
-//		} else if ("/admin_menuDelete".equals(url)) {
-//			returnUrl = "admin/admin_menuDelete";
-//
 //		} else if ("/admin_menuModify".equals(url)) {
 //			returnUrl = "admin/admin_menuModify";
 //
