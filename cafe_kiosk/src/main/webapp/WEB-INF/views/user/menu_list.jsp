@@ -24,11 +24,6 @@
 	vertical-align: middle;
 }
 
-img {
-	margin: 0 auto;
-	display: block;
-}
-
 .menu {
 	width: 250px;
 	border: 1px solid lightgray;
@@ -64,6 +59,13 @@ input {
 	font-weight: bold;
 	text-align: center;
 }
+
+#oder>input {
+	width: 150px;
+	text-align: left;
+	background-color: lightgray;
+	font-size: 20px;
+}
 </style>
 </head>
 <body>
@@ -73,14 +75,17 @@ input {
 			type="button" value="티" class="show4"> <input type="button"
 			value="음료" class="show3"><br> <input type="button"
 			value="블렌디드" class="show2"> <input type="button" value="디저트"
-			class="show5"> <br> 총 합계 금액 : <br>
-		<input type="text" name="sum" value="100000"
+			class="show5"> <br> 총 합계 금액 : <br> <input
+			type="text" name="sum" value="0"
 			style="width: 100px; background-color: lightgray;"
 			readonly="readonly">원<br>
-		<div id="oder"></div>
-		<br> <input type="reset" value="메뉴 초기화" style="font-size: 30px;"
-			onclick="reset();"><br> <br> <input type="submit"
-			value="주문 하기" class="btn btn-warning" style="font-size: 30px;">
+		<form>
+			<div id="oder" style="text-align: left; padding: 10px;"></div>
+
+			<br> <input type="button" value="메뉴 초기화"
+				style="font-size: 30px;" onclick="re();"><br> <input
+				type="submit" value="주문 하기" style="font-size: 30px;">
+		</form>
 	</div>
 	<div style="width: 85%;">
 		<div id="pop">
@@ -101,7 +106,7 @@ input {
 				</tr>
 				<tr>
 					<td><input type="button" value="-" name="maineoseu"
-						style="width: 40px;"> <input type="text" value="0"
+						style="width: 40px;"> <input type="text" value="1"
 						name="quantity" style="text-align: center;" readonly="readonly">
 						<input type="button" value="+" name="plus" style="width: 40px;"></td>
 				</tr>
@@ -122,11 +127,11 @@ input {
 						width="200px" name="img">
 				</p>
 				<p>
-					<input value="<%=menuDto.getName()%>" name="name"
+					<input value="<%=menuDto.getName()%>" name="name1"
 						readonly="readonly">
 				</p>
 				<p>
-					<input value="<%=menuDto.getPrice()%>" name="price"
+					<input value="<%=menuDto.getPrice()%>" name="price1"
 						readonly="readonly">
 				</p>
 			</div>
@@ -146,11 +151,11 @@ input {
 						width="200px" name="img">
 				</p>
 				<p>
-					<input value="<%=menuDto.getName()%>" name="name"
+					<input value="<%=menuDto.getName()%>" name="name1"
 						readonly="readonly">
 				</p>
 				<p>
-					<input value="<%=menuDto.getPrice()%>" name="price"
+					<input value="<%=menuDto.getPrice()%>" name="price1"
 						readonly="readonly">
 				</p>
 			</div>
@@ -170,11 +175,11 @@ input {
 						width="200px" name="img">
 				</p>
 				<p>
-					<input value="<%=menuDto.getName()%>" name="name"
+					<input value="<%=menuDto.getName()%>" name="name1"
 						readonly="readonly">
 				</p>
 				<p>
-					<input value="<%=menuDto.getPrice()%>" name="price"
+					<input value="<%=menuDto.getPrice()%>" name="price1"
 						readonly="readonly">
 				</p>
 			</div>
@@ -194,11 +199,11 @@ input {
 						width="200px" name="img">
 				</p>
 				<p>
-					<input value="<%=menuDto.getName()%>" name="name"
+					<input value="<%=menuDto.getName()%>" name="name1"
 						readonly="readonly">
 				</p>
 				<p>
-					<input value="<%=menuDto.getPrice()%>" name="price"
+					<input value="<%=menuDto.getPrice()%>" name="price1"
 						readonly="readonly">
 				</p>
 			</div>
@@ -218,11 +223,11 @@ input {
 						width="200px" name="img">
 				</p>
 				<p>
-					<input value="<%=menuDto.getName()%>" name="name"
+					<input value="<%=menuDto.getName()%>" name="name1"
 						readonly="readonly">
 				</p>
 				<p>
-					<input value="<%=menuDto.getPrice()%>" name="price"
+					<input value="<%=menuDto.getPrice()%>" name="price1"
 						readonly="readonly">
 				</p>
 			</div>
@@ -300,21 +305,37 @@ input {
 
 	$('.menu').click(function() {
 		var n = $('.menu').index(this);
-		var name = $("input[name=name]:eq(" + n + ")").val();
-		var price = $("input[name=price]:eq(" + n + ")").val();
+		var name = $("input[name=name1]:eq(" + n + ")").val();
+		var price = $("input[name=price1]:eq(" + n + ")").val();
 		var src = $("img[name=img]:eq(" + n + ")").attr('src');
+
 		$('#name').val(name);
 		$('#price').val(price);
 		$('#img').attr('src', src);
 		$('#pop').show();
 	});
 	function add() {
-		$('#oder').append('a');
+		var img = $('#img').attr('src');
+		var add = "<img src='"+img+"' height='110px' width='110px'>"
+		var quantity = $('input[name=quantity]').val();
+		var price = $('#price').val();
+		var name = "<input value='" + $('#name').val()
+				+ "'name='name'readonly='readonly'>";
+		var sum = $('input[name=sum]').val();
+		$('input[name=sum]').val(sum * 1 + (quantity * 1 * price));
+		$('#oder')
+				.append(
+						add
+								+ name
+								+ ' '
+								+ "<input value='"+quantity+"'name='quantity1'readonly='readonly'style='width: 20px'>"
+								+ '<br>');
 		$('#pop').hide();
+		$('input[name=quantity]').val(1);
 	};
-	function reset() {
-		$('#oder').text('');
-		$('input[name=sum]').val('0');
+	function re() {
+		$('#oder').html('');
+		$('input[name=sum]').val(0);
 	};
 </script>
 </html>
