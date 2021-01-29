@@ -1,18 +1,24 @@
 package com.model.dao;
 
-//import java.io.ByteArrayInputStream;
-//import java.io.InputStream;
-//import java.io.ObjectInputStream;
-//import java.sql.Blob;
-//import java.util.ArrayList;
-//import Coffee_Shop.menu.MenuDto;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.sql.Blob;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import com.model.dto.oderDto;
+import com.model.dto.oderlistDto;
 
 public class OderDao {
 	ResultSet resultSet;
@@ -39,7 +45,59 @@ public class OderDao {
 		}
 	}
 
+	public void close() {
+		try {
+			if (connection != null)
+				connection.close();
+			if (preparedStatement != null)
+				preparedStatement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public ArrayList<oderlistDto> allOder() {
+		ArrayList<oderlistDto> alloder = new ArrayList<oderlistDto>();
+		InputStream in = null;
+		Blob menu = null;
+		int s = 0;
+		byte[] buffer = null;
+		ObjectInputStream ois = null;
+		ArrayList<oderDto> oderDtos = null;
+
+		try {
+			getCon();
+			String sql = "select * from oder ";
+			preparedStatement = connection.prepareStatement(sql);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				oderlistDto oderlistDto = new oderlistDto();
+				oderlistDto.setOdernum(resultSet.getString(1));
+				oderlistDto.setOderdate(resultSet.getString(3));
+				oderlistDto.setSum(resultSet.getString(4));
+				oderlistDto.setStatus(resultSet.getString(5));
+
+				menu = resultSet.getBlob(2);
+				in = menu.getBinaryStream();
+				s = (int) menu.length();
+				buffer = new byte[s];
+				in.read(buffer, 0, s);
+				ois = new ObjectInputStream(new ByteArrayInputStream(buffer));
+				oderDtos = (ArrayList<oderDto>) ois.readObject();
+				oderlistDto.setOderDtos(oderDtos);
+
+				alloder.add(oderlistDto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return alloder;
+	}
+
 	public String getOneOder(String num) {
+
 		String oder = "";
 //		InputStream in = null;
 //		Blob menu = null;
@@ -98,5 +156,42 @@ public class OderDao {
 			e.printStackTrace();
 		}
 		return odernum;
+	}
+
+	public int insertOder(ArrayList<oderDto> oderDtos, String sum) {
+		int result = 0;
+		try {
+			getCon();
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ObjectOutput c = new ObjectOutputStream(bos);
+			c.writeObject(oderDtos);// 주문목록
+
+			byte[] a = bos.toByteArray();
+
+			Blob b1 = connection.createBlob();
+			b1.setBytes(1, a);
+
+			String sql = "insert into oder values(seq_oder.NEXTVAL,?,to_char(sysdate,'mm.dd hh24:mi'),?,?)";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setBlob(1, b1);
+			preparedStatement.setString(2, sum);
+			preparedStatement.setString(3, "조리전");
+
+			preparedStatement.executeQuery();
+
+			sql = "SELECT MAX(odernum) FROM oder";
+			preparedStatement = connection.prepareStatement(sql);
+
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next())
+				result = resultSet.getInt(1);
+
+			preparedStatement = connection.prepareStatement(sql);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return result;
 	}
 }

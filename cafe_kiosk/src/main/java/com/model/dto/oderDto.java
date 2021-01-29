@@ -1,6 +1,10 @@
 package com.model.dto;
 
-public class oderDto {
+import java.io.Serializable;
+
+public class oderDto implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	String menu;
 	String quantity;
 	String price;

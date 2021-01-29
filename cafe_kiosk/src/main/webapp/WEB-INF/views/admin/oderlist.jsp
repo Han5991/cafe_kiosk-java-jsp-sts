@@ -1,3 +1,6 @@
+<%@page import="com.model.dto.*"%>
+<%@page import="com.model.dao.OderDao"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -49,25 +52,38 @@ footer {
 <body>
 	<!-- Navigation -->
 	<%@ include file="../navbar_admin.jsp"%>
+	<%
+		ArrayList<oderlistDto> alloder = new ArrayList<oderlistDto>();
+	alloder = OderDao.getInstance().allOder();
+	%>
 	<h1 style="text-align: center;">주문 관리 페이지</h1>
 	<hr>
+	<%
+		for (oderlistDto oderlistDto : alloder) {
+	%>
 	<ul id="ul">
-		<!-- 		<li class="oderNum">주문번호 : <input name="oderNum" type="hidden" -->
-		<!-- 			value=""> <br> 주문시각 : <br>주문상태 : 조리전<br> <input -->
-		<!-- 			type="button" value="주문목록 보기" class="oderdetail"> -->
-		<!-- 			<table class="detail"> -->
-
-		<!-- 				<tr> -->
-		<!-- 					<td></td> -->
-		<!-- 					<td></td> -->
-		<!-- 				</tr> -->
-
-		<!-- 				<tr> -->
-		<!-- 					<td>총계 :</td> -->
-		<!-- 				</tr> -->
-		<!-- 			</table> -->
-		<!-- 		</li> -->
+		<li class="oderNum">주문번호 : <%=oderlistDto.getOdernum()%><input name="oderNum" type="hidden"
+			readonly="readonly" value="<%=oderlistDto.getOdernum()%>"> <br>
+			주문시각 : <%=oderlistDto.getOderdate()%><br>주문상태 : <%=oderlistDto.getStatus()%><br>
+			<input type="button" value="주문목록 보기" class="oderdetail">
+			<table class="detail">
+				<%
+					for (oderDto dto : oderlistDto.getOderDtos()) {
+				%>
+				<tr>
+					<td><%=dto.getMenu()%></td>
+					<td><%=dto.getQuantity()%></td>
+				</tr>
+				<%
+					}
+				%>
+			</table>
+			<p>총계 :<%=oderlistDto.getSum()%>
+		</li>
 	</ul>
+	<%
+		}
+	%>
 	<footer>
 		<input type="button" value="주문 취소" class="btn btn-warning"
 			style="font-size: 30px;">&nbsp;&nbsp;<input type="button"

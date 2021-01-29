@@ -102,7 +102,6 @@ public class LoginController {
 //		} else if ("/admin_menuModify.do".equals(url)) {
 //			returnUrl = "admin/admin_menuModifyOK";
 //		}
-
 		return returnUrl;
 	}
 }

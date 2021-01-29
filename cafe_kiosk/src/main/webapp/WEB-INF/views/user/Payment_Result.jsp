@@ -1,12 +1,14 @@
+<%@page import="com.model.dao.OderDao"%>
 <%@page import="com.model.dto.oderDto"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	request.getParameter("oder");
-ArrayList<oderDto> oderDtos = new ArrayList<oderDto>();
+	ArrayList<oderDto> oderDtos = new ArrayList<oderDto>();
 oderDtos = (ArrayList<oderDto>) session.getAttribute("oderlist");
 String sum = (String) session.getAttribute("sum");
+
+int odernum = OderDao.getInstance().insertOder(oderDtos, sum);
 %>
 <!DOCTYPE html>
 <html>
@@ -44,7 +46,7 @@ img {
 			<table class="table">
 				<thead style="font-size: 60px; text-align: center">
 					<tr>
-						<td><sup>결제가 성공적으로 완료되었습니다.</sup></td>
+						<td><sup><%=odernum%>번 결제가 성공적으로 완료되었습니다.</sup></td>
 					</tr>
 				</thead>
 				<tr>
@@ -91,17 +93,10 @@ img {
 						<tr>
 							<td>신용카드</td>
 						</tr>
-
 						<tr>
-							<td><button type="button" class="btn btn-info"
-									data-toggle="collapse" data-target="#demo"
-									style="background-color: #D9CDBC; border: none;">참고사항</button>
-								<div id="demo" class="collapse">
-									- 주문 결제 이후 3분 이내 취소 가능하며, 제품 조리시는 취소 및 환불이 불가능합니다.<br> -
-									주문 후 기타 문의사항은 소비자 상담전화(080-320-3000)로 연락바랍니다.<br> - 18시 ~
-									21시는 주문량이 많은 시간대로 배달이 지연 될 수 있으니 양해 부탁드립니다.<br> - 주문 완료 전
-									배송지와 연락처를 다시 한번 확인해 주시기 바랍니다.<br>
-								</div></td>
+							<td>참고사항 - 주문 결제 이후 3분 이내 취소 가능하며, 제품 조리시는 취소 및 환불이 불가능합니다.<br>
+								- 주문 후 기타 문의사항은 소비자 상담전화(080-320-3000)로 연락바랍니다.
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -188,7 +183,6 @@ img {
 				</table>
 			</div>
 		</div>
-
 		<div class="jumbotron" style="float: left; width: 50%">
 			<div class="container text-center">
 				<table class="table">
@@ -219,4 +213,63 @@ img {
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+	var textarea = document.getElementById("messageWindow");
+
+	var webSocket = new WebSocket('ws://localhost:8080/webChatServer');
+
+	var inputMessage = document.getElementById('inputMessage');
+
+	webSocket.onerror = function(e) {
+		onError(e);
+	};
+	webSocket.onopen = function(e) {
+		onOpen(e);
+	};
+	webSocket.onmessage = function(e) {
+		onMessage(e);
+	};
+
+	function onMessage(e) {
+		var chatMsg = event.data;
+		var date = new Date();
+		var dateInfo = date.getHours() + ":" + date.getMinutes() + ":"
+				+ date.getSeconds();
+		if (chatMsg.substring(0, 6) == 'server') {
+			var $chat = $("<div class='chat notice'>" + chatMsg + "</div>");
+			$('#chat-container').append($chat);
+		} else {
+			var $chat = $("<div class='chat-box'><div class='chat'>" + chatMsg
+					+ "</div><div class='chat-info chat-box'>" + dateInfo
+					+ "</div></div>");
+			$('#chat-container').append($chat);
+		}
+
+		$('#chat-container').scrollTop(
+				$('#chat-container')[0].scrollHeight + 20);
+	}
+
+	function onOpen(e) {
+
+	}
+
+	function onError(e) {
+		alert(e.data);
+	}
+
+	function send() {
+		var chatMsg = inputMessage.value;
+	}
+	$(function() {
+		// 		$('#inputMessage').keydown(function(key) {
+		// 			if (key.keyCode == 13) {
+		// 				$('#inputMessage').focus();
+		// 				send();
+		// 			}
+		// 		});
+		// 		$('#btn-submit').click(function() {
+		// 			send();
+		// 		});
+	})
+</script>
 </html>
