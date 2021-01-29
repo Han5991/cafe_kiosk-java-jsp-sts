@@ -27,9 +27,9 @@ public class WebChatServer extends HttpServlet {
 	@OnMessage
 	public void onMsg(String message, Session session) throws IOException {
 		String userName = users.get(session).getName();
-		System.out.println(WebChatServer.session);
 		synchronized (users) {
 			WebChatServer.session.getBasicRemote().sendText(userName + " : " + message);
+			System.out.println(userName + " : " + message);
 //			Iterator<Session> it = users.keySet().iterator();
 //			while (it.hasNext()) {
 //				Session currentSession = it.next();

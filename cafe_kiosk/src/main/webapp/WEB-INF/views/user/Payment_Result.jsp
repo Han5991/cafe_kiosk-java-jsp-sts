@@ -35,11 +35,30 @@ int odernum = OderDao.getInstance().insertOder(oderDtos, sum);
 img {
 	object-fit: cover
 }
+
+#pop {
+	top: 20%;
+	left: 35%;
+	position: absolute;
+	width: 350px;
+	z-index: 5;
+	box-shadow: 0 0 10px rgb(0 0 0/ 50%);
+	background: #fff;
+	border-radius: 10px;
+	text-align: center;
+	padding: 20px;
+	box-sizing: border-box;
+	transition: all 0.5s;
+}
 </style>
 <title>결제 정보</title>
 </head>
 <body>
 	<%@ include file="../navbar_user.jsp"%>
+	<div id="pop">
+		<input type="hidden" name="odernum" value="<%=odernum%>"> <input
+			id="btn-submit" type="submit" value="전송">
+	</div>
 
 	<div class="jumbotron" style="padding: 40px 0 0 0;">
 		<div class="container text-center">
@@ -206,20 +225,17 @@ img {
 		<div class="container text-center">
 			<div style="width: 100%; float: left; margin: 0 0 40px 0">
 				<input type="button" value="홈으로" class="btn btn-warning"
-					onclick="javascript:document.location.href='#'"> <input
-					type="button" value="나의 주문 관리" class="btn btn-warning"
-					onclick="javascript:document.location.href='oderlist.jsp'">
+					onclick="javascript:document.location.href='menulist.do'">
 			</div>
 		</div>
 	</div>
+	<%
+		session.removeAttribute("oderlist");
+	session.removeAttribute("sum");
+	%>
 </body>
 <script type="text/javascript">
-	var textarea = document.getElementById("messageWindow");
-
 	var webSocket = new WebSocket('ws://localhost:8080/webChatServer');
-
-	var inputMessage = document.getElementById('inputMessage');
-
 	webSocket.onerror = function(e) {
 		onError(e);
 	};
@@ -231,22 +247,22 @@ img {
 	};
 
 	function onMessage(e) {
-		var chatMsg = event.data;
-		var date = new Date();
-		var dateInfo = date.getHours() + ":" + date.getMinutes() + ":"
-				+ date.getSeconds();
-		if (chatMsg.substring(0, 6) == 'server') {
-			var $chat = $("<div class='chat notice'>" + chatMsg + "</div>");
-			$('#chat-container').append($chat);
-		} else {
-			var $chat = $("<div class='chat-box'><div class='chat'>" + chatMsg
-					+ "</div><div class='chat-info chat-box'>" + dateInfo
-					+ "</div></div>");
-			$('#chat-container').append($chat);
-		}
+		// 		var chatMsg = event.data;
+		// 		var date = new Date();
+		// 		var dateInfo = date.getHours() + ":" + date.getMinutes() + ":"
+		// 				+ date.getSeconds();
+		// 		if (chatMsg.substring(0, 6) == 'server') {
+		// 			var $chat = $("<div class='chat notice'>" + chatMsg + "</div>");
+		// 			$('#chat-container').append($chat);
+		// 		} else {
+		// 			var $chat = $("<div class='chat-box'><div class='chat'>" + chatMsg
+		// 					+ "</div><div class='chat-info chat-box'>" + dateInfo
+		// 					+ "</div></div>");
+		// 			$('#chat-container').append($chat);
+		// 		}
 
-		$('#chat-container').scrollTop(
-				$('#chat-container')[0].scrollHeight + 20);
+		// 		$('#chat-container').scrollTop(
+		// 				$('#chat-container')[0].scrollHeight + 20);
 	}
 
 	function onOpen(e) {
@@ -256,20 +272,12 @@ img {
 	function onError(e) {
 		alert(e.data);
 	}
-
 	function send() {
-		var chatMsg = inputMessage.value;
+		var chatMsg = $('input[name=odernum]').val();
 	}
-	$(function() {
-		// 		$('#inputMessage').keydown(function(key) {
-		// 			if (key.keyCode == 13) {
-		// 				$('#inputMessage').focus();
-		// 				send();
-		// 			}
-		// 		});
-		// 		$('#btn-submit').click(function() {
-		// 			send();
-		// 		});
-	})
+	$('#btn-submit').click(function() {
+		send();
+		$('#pop').hide();
+	});
 </script>
 </html>

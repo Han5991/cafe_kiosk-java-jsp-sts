@@ -67,7 +67,7 @@ public class OderDao {
 
 		try {
 			getCon();
-			String sql = "select * from oder ";
+			String sql = "SELECT * FROM oder ORDER BY TO_NUMBER(odernum)";
 			preparedStatement = connection.prepareStatement(sql);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -179,7 +179,7 @@ public class OderDao {
 
 			preparedStatement.executeQuery();
 
-			sql = "SELECT MAX(odernum) FROM oder";
+			sql = "SELECT MAX(TO_NUMBER(odernum)) FROM oder";
 			preparedStatement = connection.prepareStatement(sql);
 
 			resultSet = preparedStatement.executeQuery();

@@ -78,7 +78,7 @@ footer {
 					}
 				%>
 			</table>
-			<p>총계 :<%=oderlistDto.getSum()%>
+			<p>총계 : <%=oderlistDto.getSum()%>원
 		</li>
 	</ul>
 	<%

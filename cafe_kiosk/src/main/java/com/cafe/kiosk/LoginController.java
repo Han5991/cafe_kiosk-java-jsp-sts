@@ -30,6 +30,8 @@ public class LoginController {
 
 		if (id.equals("admin"))
 			return "admin/oderlist";
+		else if (id.equals("rewq985"))
+			return "user/chatpage";
 		else
 			return "user/menu_list";
 	}
@@ -86,7 +88,7 @@ public class LoginController {
 			return "admin/admin_menuModify";
 	}
 
-	@RequestMapping(value = { "/Cart.do","/oder.do" })
+	@RequestMapping(value = { "/Cart.do", "/oder.do", "/menulist.do" })
 	public String user(HttpServletRequest request) {
 		UrlPathHelper urls = new UrlPathHelper();
 		String url = urls.getOriginatingServletPath(request);
@@ -95,6 +97,8 @@ public class LoginController {
 			returnUrl = "user/Cart";
 		} else if ("/oder.do".equals(url)) {
 			returnUrl = "user/Payment_Result";
+		} else if ("/menulist.do".equals(url)) {
+			returnUrl = "user/menu_list";
 		}
 //		} else if ("/admin_menuModify".equals(url)) {
 //			returnUrl = "admin/admin_menuModify";
