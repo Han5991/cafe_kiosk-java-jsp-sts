@@ -6,8 +6,8 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.sql.Blob;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -96,7 +96,47 @@ public class OderDao {
 		return alloder;
 	}
 
-	public String getOneOder(String num) {
+	@SuppressWarnings("unchecked")
+	public oderlistDto getOneOder(String num) {
+		oderlistDto oderlistDto = new oderlistDto();
+		InputStream in = null;
+		Blob menu = null;
+		int s = 0;
+		byte[] buffer = null;
+		ObjectInputStream ois = null;
+		ArrayList<oderDto> oderDtos = null;
+		int odernum = Integer.parseInt(num);
+
+		try {
+			getCon();
+			String sql = "select * from oder where odernum=?";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, odernum);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				oderlistDto.setOdernum(resultSet.getString(1));
+				oderlistDto.setOderdate(resultSet.getString(3));
+				oderlistDto.setSum(resultSet.getString(4));
+				oderlistDto.setStatus(resultSet.getString(5));
+
+				menu = resultSet.getBlob(2);
+				in = menu.getBinaryStream();
+				s = (int) menu.length();
+				buffer = new byte[s];
+				in.read(buffer, 0, s);
+				ois = new ObjectInputStream(new ByteArrayInputStream(buffer));
+				oderDtos = (ArrayList<oderDto>) ois.readObject();
+				oderlistDto.setOderDtos(oderDtos);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return oderlistDto;
+	}
+
+	public String getOneOderPrint(String num) {
 
 		String oder = "";
 //		InputStream in = null;
@@ -131,11 +171,10 @@ public class OderDao {
 //					oder += out.getQuantity();
 //				}
 			}
-
-			connection.close();
-			preparedStatement.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 		return oder;
 	}

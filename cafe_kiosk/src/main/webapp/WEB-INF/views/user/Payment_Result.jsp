@@ -274,6 +274,7 @@ img {
 	}
 	function send() {
 		var chatMsg = $('input[name=odernum]').val();
+		webSocket.send(chatMsg);
 	}
 	$('#btn-submit').click(function() {
 		send();

@@ -58,14 +58,15 @@ footer {
 	%>
 	<h1 style="text-align: center;">주문 관리 페이지</h1>
 	<hr>
-	<%
-		for (oderlistDto oderlistDto : alloder) {
-	%>
 	<ul id="ul">
-		<li class="oderNum">주문번호 : <%=oderlistDto.getOdernum()%><input name="oderNum" type="hidden"
-			readonly="readonly" value="<%=oderlistDto.getOdernum()%>"> <br>
-			주문시각 : <%=oderlistDto.getOderdate()%><br>주문상태 : <%=oderlistDto.getStatus()%><br>
-			<input type="button" value="주문목록 보기" class="oderdetail">
+		<%
+			for (oderlistDto oderlistDto : alloder) {
+		%>
+		<li class="oderNum">주문번호 : <%=oderlistDto.getOdernum()%><input
+			name="oderNum" type="hidden" readonly="readonly"
+			value="<%=oderlistDto.getOdernum()%>"> <br> 주문시각 : <%=oderlistDto.getOderdate()%><br>주문상태
+			: <%=oderlistDto.getStatus()%><br> <input type="button"
+			value="주문목록 보기" class="oderdetail">
 			<table class="detail">
 				<%
 					for (oderDto dto : oderlistDto.getOderDtos()) {
@@ -78,12 +79,38 @@ footer {
 					}
 				%>
 			</table>
-			<p>총계 : <%=oderlistDto.getSum()%>원
-		</li>
+			<p>
+				총계 :
+				<%=oderlistDto.getSum()%>원</li>
+		<%
+			}
+		%>
+		<%
+			oderlistDto dto = new oderlistDto();
+		dto = OderDao.getInstance().getOneOder("18");
+		%>
+		<li class="oderNum">주문번호 : <%=dto.getOdernum()%><input
+			name="oderNum" type="hidden" readonly="readonly"
+			value="<%=dto.getOdernum()%>"> <br> 주문시각 : <%=dto.getOderdate()%><br>주문상태
+			: <%=dto.getStatus()%><br> <input type="button" value="주문목록 보기"
+			class="oderdetail">
+			<table class="detail">
+				<%
+					for (oderDto dto2 : dto.getOderDtos()) {
+				%>
+				<tr>
+					<td><%=dto2.getMenu()%></td>
+					<td><%=dto2.getQuantity()%></td>
+				</tr>
+				<%
+					}
+				%>
+			</table>
+			<p>
+				총계2:
+				<%=dto.getSum()%>원</li>
 	</ul>
-	<%
-		}
-	%>
+
 	<footer>
 		<input type="button" value="주문 취소" class="btn btn-warning"
 			style="font-size: 30px;">&nbsp;&nbsp;<input type="button"
@@ -110,9 +137,9 @@ footer {
 		var chatMsg = event.data;
 		if (chatMsg.substring(0, 5) == 'store') {
 			var odernum = chatMsg.split(" ")[2];
-			var $chat = "<li class='oderNum'>주문번호 : "
-					+ odernum
-					+ "<input name='oderNum' type='hidden' value="+odernum+"> <br> 주문시각 : <br>주문상태 : 조리전<br> <input type='button' value='주문목록 보기' class='oderdetail'><table class='detail'><tr><td></td><td></td></tr><tr><td>총계 :</td></tr></table></li>"
+			var $chat = 
+				
+				
 			$('#ul').append($chat);
 		}
 
