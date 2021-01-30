@@ -85,30 +85,7 @@ footer {
 		<%
 			}
 		%>
-		<%
-			oderlistDto dto = new oderlistDto();
-		dto = OderDao.getInstance().getOneOder("18");
-		%>
-		<li class="oderNum">주문번호 : <%=dto.getOdernum()%><input
-			name="oderNum" type="hidden" readonly="readonly"
-			value="<%=dto.getOdernum()%>"> <br> 주문시각 : <%=dto.getOderdate()%><br>주문상태
-			: <%=dto.getStatus()%><br> <input type="button" value="주문목록 보기"
-			class="oderdetail">
-			<table class="detail">
-				<%
-					for (oderDto dto2 : dto.getOderDtos()) {
-				%>
-				<tr>
-					<td><%=dto2.getMenu()%></td>
-					<td><%=dto2.getQuantity()%></td>
-				</tr>
-				<%
-					}
-				%>
-			</table>
-			<p>
-				총계2:
-				<%=dto.getSum()%>원</li>
+
 	</ul>
 
 	<footer>
@@ -121,6 +98,21 @@ footer {
 </body>
 <script type="text/javascript">
 	var num = 0;
+	$('.detail').hide();
+	$('.oderNum').click(function() {
+		var n = $('.oderNum').index(this);
+		num = $("input[name=oderNum]:eq(" + n + ")").val();
+	});
+	$('.oderdetail').click(function() {
+		var n = $('.oderdetail').index(this);
+		if ($(".detail:eq(" + n + ")").css("display") == "none") {
+			$(".detail:eq(" + n + ")").show();
+			$(".oderdetail:eq(" + n + ")").val("주문목록 숨기기");
+		} else {
+			$(".detail:eq(" + n + ")").hide();
+			$(".oderdetail:eq(" + n + ")").val("주문목록 보기");
+		}
+	});
 	var webSocket = new WebSocket('ws://localhost:8080/webChatServer');
 
 	webSocket.onerror = function(e) {
@@ -135,13 +127,27 @@ footer {
 
 	function onMessage(e) {
 		var chatMsg = event.data;
-		if (chatMsg.substring(0, 5) == 'store') {
-			var odernum = chatMsg.split(" ")[2];
-			var $chat = 
-				
-				
-			$('#ul').append($chat);
+
+		var chatMsgs = chatMsg.split(",");
+
+		var $chat = "<li class='oderNum'>주문번호 : "
+				+ chatMsgs[chatMsgs.length - 5]
+				+ "<input name='oderNum' type='hidden' value='"+chatMsgs[chatMsgs.length-5]+"'> <br> 주문시각 : "
+				+ chatMsgs[chatMsgs.length - 4]
+				+ "<br>주문상태: "
+				+ chatMsgs[chatMsgs.length - 2]
+				+ "<br> <input type='button' value='주문목록 보기' class='oderdetail'><table class='detail'>";
+
+		var $chat2 = ""
+		for (var i = 0; i < chatMsgs.length - 5; i++) {
+			$chat2 += "<tr><td>" + chatMsgs[i] + "</td><td>" + chatMsgs[++i]
+					+ "</td></tr>";
 		}
+
+		var $chat3 = "</table><p>총계 :" + chatMsgs[chatMsgs.length - 3]
+				+ "원</li>";
+
+		$('#ul').append($chat + $chat2 + $chat3);
 
 		$('.detail').hide();
 		$('.oderNum').click(function() {
@@ -158,7 +164,6 @@ footer {
 				$(".oderdetail:eq(" + n + ")").val("주문목록 보기");
 			}
 		});
-
 		// 		function print() {
 		// 			var url = "../receiptPrint.do?odernum=" + num;
 		// 			window

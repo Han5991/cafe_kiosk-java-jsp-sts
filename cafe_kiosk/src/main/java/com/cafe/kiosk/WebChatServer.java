@@ -7,6 +7,8 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.stereotype.Controller;
 
+import com.model.dao.OderDao;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -27,8 +29,9 @@ public class WebChatServer extends HttpServlet {
 	@OnMessage
 	public void onMsg(String message, Session session) throws IOException {
 		String userName = users.get(session).getName();
+		message = OderDao.getInstance().getOneOder(message);
 		synchronized (users) {
-			WebChatServer.session.getBasicRemote().sendText(userName + " : " + message);
+			WebChatServer.session.getBasicRemote().sendText( message+ ","+userName);
 			System.out.println(userName + " : " + message);
 //			Iterator<Session> it = users.keySet().iterator();
 //			while (it.hasNext()) {
@@ -51,31 +54,31 @@ public class WebChatServer extends HttpServlet {
 		System.out.println(session + " connect");
 
 		users.put(session, client);
-		sendNotice(client.getName() + "님이 입장하셨습니다. 현재 사용자 " + users.size() + "명");
+//		sendNotice(client.getName() + "님이 입장하셨습니다. 현재 사용자 " + users.size() + "명");
 	}
 
-	public void sendNotice(String message) {
-		String userName = "server";
-		System.out.println(userName + " : " + message);
-
-		synchronized (users) {
-			Iterator<Session> it = users.keySet().iterator();
-			while (it.hasNext()) {
-				Session currentSession = it.next();
-				try {
-					currentSession.getBasicRemote().sendText(userName + " : " + message);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+//	public void sendNotice(String message) {
+//		String userName = "server";
+//		System.out.println(userName + " : " + message);
+//
+//		synchronized (users) {
+//			Iterator<Session> it = users.keySet().iterator();
+//			while (it.hasNext()) {
+//				Session currentSession = it.next();
+//				try {
+//					currentSession.getBasicRemote().sendText(userName + " : " + message);
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//	}
 
 	@OnClose
 	public void onClose(Session session) {
 		String userName = users.get(session).getName();
 		users.remove(session);
-		sendNotice(userName + "님이 퇴장하셨습니다. 현재 사용자 " + users.size() + "명");
+//		sendNotice(userName + "님이 퇴장하셨습니다. 현재 사용자 " + users.size() + "명");
 	}
 
 }

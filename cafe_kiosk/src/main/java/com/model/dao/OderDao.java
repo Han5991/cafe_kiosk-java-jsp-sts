@@ -97,27 +97,21 @@ public class OderDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public oderlistDto getOneOder(String num) {
-		oderlistDto oderlistDto = new oderlistDto();
+	public String getOneOder(String num) {
 		InputStream in = null;
 		Blob menu = null;
 		int s = 0;
 		byte[] buffer = null;
 		ObjectInputStream ois = null;
 		ArrayList<oderDto> oderDtos = null;
-		int odernum = Integer.parseInt(num);
-
+		String oder = "";
 		try {
 			getCon();
 			String sql = "select * from oder where odernum=?";
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, odernum);
+			preparedStatement.setString(1, num);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				oderlistDto.setOdernum(resultSet.getString(1));
-				oderlistDto.setOderdate(resultSet.getString(3));
-				oderlistDto.setSum(resultSet.getString(4));
-				oderlistDto.setStatus(resultSet.getString(5));
 
 				menu = resultSet.getBlob(2);
 				in = menu.getBinaryStream();
@@ -126,14 +120,22 @@ public class OderDao {
 				in.read(buffer, 0, s);
 				ois = new ObjectInputStream(new ByteArrayInputStream(buffer));
 				oderDtos = (ArrayList<oderDto>) ois.readObject();
-				oderlistDto.setOderDtos(oderDtos);
+				for (oderDto a : oderDtos) {
+					oder += a.getMenu() + ",";
+					oder += a.getQuantity() + ",";
+				}
+
+				oder += resultSet.getString(1) + ",";
+				oder += resultSet.getString(3) + ",";
+				oder += resultSet.getString(4) + ",";
+				oder += resultSet.getString(5);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
-		return oderlistDto;
+		return oder;
 	}
 
 	public String getOneOderPrint(String num) {
