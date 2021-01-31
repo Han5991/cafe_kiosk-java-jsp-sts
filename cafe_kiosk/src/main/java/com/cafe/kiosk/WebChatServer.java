@@ -32,7 +32,6 @@ public class WebChatServer extends HttpServlet {
 		message = OderDao.getInstance().getOneOder(message);
 		synchronized (users) {
 			WebChatServer.session.getBasicRemote().sendText( message+ ","+userName);
-			System.out.println(userName + " : " + message);
 //			Iterator<Session> it = users.keySet().iterator();
 //			while (it.hasNext()) {
 //				Session currentSession = it.next();

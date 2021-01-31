@@ -138,49 +138,6 @@ public class OderDao {
 		return oder;
 	}
 
-	public String getOneOderPrint(String num) {
-
-		String oder = "";
-//		InputStream in = null;
-//		Blob menu = null;
-//		int s = 0;
-//		byte[] buffer = null;
-//		ObjectInputStream ois = null;
-//		ArrayList<MenuDto> Menudtos = null;
-		int odernum = Integer.parseInt(num);
-		getCon();
-		try {
-
-			String sql = "select * from oderlist where oderlistnum=?";
-			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, odernum);
-			resultSet = preparedStatement.executeQuery();
-
-			while (resultSet.next()) {
-				oder += resultSet.getInt(1);
-
-//				menu = resultSet.getBlob(4);
-//
-//				in = menu.getBinaryStream();
-//				s = (int) menu.length();
-//				buffer = new byte[s];
-//				in.read(buffer, 0, s);
-//
-//				ois = new ObjectInputStream(new ByteArrayInputStream(buffer));
-//				Menudtos = (ArrayList<MenuDto>) ois.readObject();
-//				for (MenuDto out : Menudtos) {
-//					oder += out.getName();
-//					oder += out.getQuantity();
-//				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-		return oder;
-	}
-
 	public int deleteOder(String num) {
 		int odernum = Integer.parseInt(num);
 		getCon();

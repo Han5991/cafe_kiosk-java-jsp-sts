@@ -1,5 +1,6 @@
 package com.cafe.kiosk;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UrlPathHelper;
 
 import com.model.dao.MenuDao;
+import com.model.dao.OderDao;
 
 @Controller
 public class LoginController {
@@ -36,7 +38,7 @@ public class LoginController {
 			return "user/menu_list";
 	}
 
-	@RequestMapping(value = { "/admin_menuInsert", "/admin_menuDelete", "/admin_menuModify", "/admin_menuModify.do", })
+	@RequestMapping(value = { "/admin_menuInsert", "/admin_menuDelete", "/admin_menuModify", "/admin_menuModify.do" })
 	public String admin(HttpServletRequest request) {
 		UrlPathHelper urls = new UrlPathHelper();
 		String url = urls.getOriginatingServletPath(request);
@@ -86,6 +88,14 @@ public class LoginController {
 			return "user/menu_list";
 		} else
 			return "admin/admin_menuModify";
+	}
+
+	@RequestMapping(value = "/receiptPrint.do")
+	public String receipPrint(HttpServletRequest request) {
+		String num = request.getParameter("odernum");
+		String oder = OderDao.getInstance().getOneOder(num);
+		request.setAttribute("oneOder", oder);
+		return "receiptPrint";
 	}
 
 	@RequestMapping(value = { "/Cart.do", "/oder.do", "/menulist.do" })

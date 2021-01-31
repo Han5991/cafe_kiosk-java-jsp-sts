@@ -98,20 +98,9 @@ footer {
 </body>
 <script type="text/javascript">
 	var num = 0;
-	$('.detail').hide();
 	$('.oderNum').click(function() {
 		var n = $('.oderNum').index(this);
 		num = $("input[name=oderNum]:eq(" + n + ")").val();
-	});
-	$('.oderdetail').click(function() {
-		var n = $('.oderdetail').index(this);
-		if ($(".detail:eq(" + n + ")").css("display") == "none") {
-			$(".detail:eq(" + n + ")").show();
-			$(".oderdetail:eq(" + n + ")").val("주문목록 숨기기");
-		} else {
-			$(".detail:eq(" + n + ")").hide();
-			$(".oderdetail:eq(" + n + ")").val("주문목록 보기");
-		}
 	});
 	var webSocket = new WebSocket('ws://localhost:8080/webChatServer');
 
@@ -149,28 +138,10 @@ footer {
 
 		$('#ul').append($chat + $chat2 + $chat3);
 
-		$('.detail').hide();
 		$('.oderNum').click(function() {
 			var n = $('.oderNum').index(this);
 			num = $("input[name=oderNum]:eq(" + n + ")").val();
 		});
-		$('.oderdetail').click(function() {
-			var n = $('.oderdetail').index(this);
-			if ($(".detail:eq(" + n + ")").css("display") == "none") {
-				$(".detail:eq(" + n + ")").show();
-				$(".oderdetail:eq(" + n + ")").val("주문목록 숨기기");
-			} else {
-				$(".detail:eq(" + n + ")").hide();
-				$(".oderdetail:eq(" + n + ")").val("주문목록 보기");
-			}
-		});
-		// 		function print() {
-		// 			var url = "../receiptPrint.do?odernum=" + num;
-		// 			window
-		// 					.open(url, "receiptPrint",
-		// 							"toolbar=no, menubar=no,scrollbar=yes, resizable=no, width=450,height=800");
-		// 		}
-
 	}
 
 	function onOpen(e) {
@@ -182,5 +153,26 @@ footer {
 
 	function send() {
 	}
+	function print() {
+		var url = "receiptPrint.do?odernum=" + num;
+		window
+				.open(url, "receiptPrint",
+						"toolbar=no, menubar=no,scrollbar=yes, resizable=no, width=450,height=800");
+	}
+
+	// 	$('.oderNum').click(function() {
+	//		var n = $('.oderNum').index(this);
+	//		num = $("input[name=oderNum]:eq(" + n + ")").val();
+	//	});
+	//	$('.oderdetail').click(function() {
+	//		var n = $('.oderdetail').index(this);
+	//		if ($(".detail:eq(" + n + ")").css("display") == "none") {
+	//			$(".detail:eq(" + n + ")").show();
+	//			$(".oderdetail:eq(" + n + ")").val("주문목록 숨기기");
+	//		} else {
+	//			$(".detail:eq(" + n + ")").hide();
+	//			$(".oderdetail:eq(" + n + ")").val("주문목록 보기");
+	//		}
+	//	});
 </script>
 </html>
