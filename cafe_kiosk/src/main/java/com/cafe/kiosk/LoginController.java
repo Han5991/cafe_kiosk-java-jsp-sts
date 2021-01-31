@@ -102,8 +102,14 @@ public class LoginController {
 	@RequestMapping(value = "/deleteOder.do")
 	public String deleteOder(HttpServletRequest request) {
 		String num = request.getParameter("odernum");
-		int oder = OderDao.getInstance().deleteOder(num);
-		request.setAttribute("deleteOder", oder);
+		OderDao.getInstance().deleteOder(num);
+		return "admin/oderlist";
+	}
+	
+	@RequestMapping(value = "/startOder.do")
+	public String startOder(HttpServletRequest request) {
+		String num = request.getParameter("odernum");
+		OderDao.getInstance().startOder(num);
 		return "admin/oderlist";
 	}
 

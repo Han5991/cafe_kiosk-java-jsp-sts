@@ -91,9 +91,9 @@ footer {
 	<footer>
 		<input type="button" value="주문 취소" class="btn btn-warning" id="delete"
 			style="font-size: 30px;">&nbsp;&nbsp;<input type="button"
-			value="조리 시작" class="btn btn-warning" style="font-size: 30px;">&nbsp;&nbsp;<input
-			type="button" value="영수증 출력" class="btn btn-warning"
-			style="font-size: 30px;" onclick="print()">
+			value="조리 시작" class="btn btn-warning" style="font-size: 30px;"
+			id="start">&nbsp;&nbsp;<input type="button" value="영수증 출력"
+			class="btn btn-warning" style="font-size: 30px;" onclick="print()">
 	</footer>
 </body>
 <script type="text/javascript">
@@ -102,6 +102,14 @@ footer {
 		if (confirm("정말 취소하시겠습니까 ?") == true) {
 			location.href = "deleteOder.do?odernum=" + num;
 			alert("취소되었습니다");
+		} else {
+			return;
+		}
+	});
+	$("#start").click(function() {
+		if (confirm("조리가 완료 되었습니까?") == true) {
+			location.href = "startOder.do?odernum=" + num;
+			alert("조리가 완료되었습니다");
 		} else {
 			return;
 		}

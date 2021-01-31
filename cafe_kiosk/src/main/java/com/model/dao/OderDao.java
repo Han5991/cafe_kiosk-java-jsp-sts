@@ -67,7 +67,7 @@ public class OderDao {
 
 		try {
 			getCon();
-			String sql = "SELECT * FROM oder ORDER BY TO_NUMBER(odernum)";
+			String sql = "SELECT * FROM oder where status='조리전' ORDER BY TO_NUMBER(odernum)";
 			preparedStatement = connection.prepareStatement(sql);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
@@ -146,7 +146,7 @@ public class OderDao {
 			String sql = "delete from oder where odernum=?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, odernum);
-			odernum = preparedStatement.executeUpdate();// 이미 인트 주소가 있으니 재활용 2가 리턴되면 삭제 성공
+			odernum = preparedStatement.executeUpdate();
 
 			connection.close();
 			preparedStatement.close();
@@ -156,6 +156,24 @@ public class OderDao {
 		return odernum;
 	}
 
+	public int startOder(String num) {
+		int odernum = Integer.parseInt(num);
+		getCon();
+
+		try {
+			String sql = "update oder set status= '조리완료' where odernum=?";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, odernum);
+			odernum = preparedStatement.executeUpdate();
+
+			connection.close();
+			preparedStatement.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return odernum;
+	}
+	
 	public int insertOder(ArrayList<oderDto> oderDtos, String sum) {
 		int result = 0;
 		try {
