@@ -57,7 +57,7 @@ img {
 	<%@ include file="../navbar_user.jsp"%>
 	<div id="pop">
 		<input type="hidden" name="odernum" value="<%=odernum%>"> <input
-			id="btn-submit" type="submit" value="전송">
+			id="btn-submit" type="submit" value="전송" onclick="javascript:document.location.href='menulist.do'">
 	</div>
 
 	<div class="jumbotron" style="padding: 40px 0 0 0;">

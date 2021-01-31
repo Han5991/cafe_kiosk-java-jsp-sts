@@ -89,7 +89,7 @@ footer {
 	</ul>
 
 	<footer>
-		<input type="button" value="주문 취소" class="btn btn-warning"
+		<input type="button" value="주문 취소" class="btn btn-warning" id="delete"
 			style="font-size: 30px;">&nbsp;&nbsp;<input type="button"
 			value="조리 시작" class="btn btn-warning" style="font-size: 30px;">&nbsp;&nbsp;<input
 			type="button" value="영수증 출력" class="btn btn-warning"
@@ -98,6 +98,14 @@ footer {
 </body>
 <script type="text/javascript">
 	var num = 0;
+	$("#delete").click(function() {
+		if (confirm("정말 취소하시겠습니까 ?") == true) {
+			location.href = "deleteOder.do?odernum=" + num;
+			alert("취소되었습니다");
+		} else {
+			return;
+		}
+	});
 	$('.oderNum').click(function() {
 		var n = $('.oderNum').index(this);
 		num = $("input[name=oderNum]:eq(" + n + ")").val();
@@ -133,7 +141,7 @@ footer {
 					+ "</td></tr>";
 		}
 
-		var $chat3 = "</table><p>총계 :" + chatMsgs[chatMsgs.length - 3]
+		var $chat3 = "</table><p>총계 : " + chatMsgs[chatMsgs.length - 3]
 				+ "원</li>";
 
 		$('#ul').append($chat + $chat2 + $chat3);

@@ -143,7 +143,7 @@ public class OderDao {
 		getCon();
 
 		try {
-			String sql = "delete from oderlist where oderlistnum=?";
+			String sql = "delete from oder where odernum=?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, odernum);
 			odernum = preparedStatement.executeUpdate();// 이미 인트 주소가 있으니 재활용 2가 리턴되면 삭제 성공
