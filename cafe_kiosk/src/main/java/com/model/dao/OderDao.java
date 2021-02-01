@@ -180,7 +180,7 @@ public class OderDao {
 			getCon();
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ObjectOutput c = new ObjectOutputStream(bos);
-			c.writeObject(oderDtos);// 주문목록
+			c.writeObject(oderDtos);
 
 			byte[] a = bos.toByteArray();
 
@@ -191,7 +191,7 @@ public class OderDao {
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setBlob(1, b1);
 			preparedStatement.setString(2, sum);
-			preparedStatement.setString(3, "조리전");
+			preparedStatement.setString(3, "주문전");
 
 			preparedStatement.executeQuery();
 
