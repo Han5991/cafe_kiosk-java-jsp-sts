@@ -1,12 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
 <title>Bootstrap Example</title>
 <meta charset="utf-8">
 <style>
+@font-face {
+	font-family: hzStyleFont;
+	src: url("<spring:url value='/resources/font/ImcreSoojin.ttf'/>");
+}
+
 * {
+	font-family: hzStyleFont;
 	font-size: 25px;
 }
 

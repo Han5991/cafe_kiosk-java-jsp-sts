@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +44,8 @@ img {
 		<div style="margin: 0 auto;">
 			<p>
 				<img src="" id="loadImg" width="300px" height="300px"
-					style="margin-top: 20px;">
+					style="margin-top: 20px;"
+					onerror="this.src='<spring:url value='/resources/img2/default_img.jpg'/>'">
 			</p>
 			<p>
 				<input type="file" id="imgAttach" name="image" onchange="LoadImg()"
