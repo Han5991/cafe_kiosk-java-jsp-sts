@@ -136,20 +136,20 @@ footer {
 		var chatMsgs = chatMsg.split(",");
 
 		var $chat = "<li class='oderNum'>주문번호 : "
-				+ chatMsgs[chatMsgs.length - 5]
-				+ "<input name='oderNum' type='hidden' value='"+chatMsgs[chatMsgs.length-5]+"'> <br> 주문시각 : "
 				+ chatMsgs[chatMsgs.length - 4]
-				+ "<br>주문상태: "
-				+ chatMsgs[chatMsgs.length - 2]
+				+ "<input name='oderNum' type='hidden' value='"+chatMsgs[chatMsgs.length-4]+"'> <br> 주문시각 : "
+				+ chatMsgs[chatMsgs.length - 3]
+				+ "<br>주문상태 : "
+				+ chatMsgs[chatMsgs.length - 1]
 				+ "<br> <input type='button' value='주문목록 보기' class='oderdetail'><table class='detail'>";
 
 		var $chat2 = ""
-		for (var i = 0; i < chatMsgs.length - 5; i++) {
+		for (var i = 0; i < chatMsgs.length - 4; i++) {
 			$chat2 += "<tr><td>" + chatMsgs[i] + "</td><td>" + chatMsgs[++i]
 					+ "</td></tr>";
 		}
 
-		var $chat3 = "</table><p>총계 : " + chatMsgs[chatMsgs.length - 3]
+		var $chat3 = "</table><p>총계 : " + chatMsgs[chatMsgs.length - 2]
 				+ "원</li>";
 
 		$('#ul').append($chat + $chat2 + $chat3);

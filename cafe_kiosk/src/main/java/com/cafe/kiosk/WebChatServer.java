@@ -28,10 +28,11 @@ public class WebChatServer extends HttpServlet {
 
 	@OnMessage
 	public void onMsg(String message, Session session) throws IOException {
-		String userName = users.get(session).getName();
+//		String userName = users.get(session).getName();
 		message = OderDao.getInstance().getOneOder(message);
 		synchronized (users) {
-			WebChatServer.session.getBasicRemote().sendText( message+ ","+userName);
+//			WebChatServer.session.getBasicRemote().sendText( message+ ","+userName);
+			WebChatServer.session.getBasicRemote().sendText( message);
 //			Iterator<Session> it = users.keySet().iterator();
 //			while (it.hasNext()) {
 //				Session currentSession = it.next();

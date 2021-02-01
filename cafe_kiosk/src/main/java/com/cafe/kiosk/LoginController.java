@@ -1,8 +1,5 @@
 package com.cafe.kiosk;
 
-import java.util.ArrayList;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -72,7 +69,7 @@ public class LoginController {
 	public String insertmenu(HttpServletRequest request) {
 		int a = MenuDao.getInstance().insertMenu(request);
 		if (a == 1) {
-			logger.info("삽입 성공");
+			logger.info("메뉴삽입 성공");
 			return "user/menu_list";
 		} else
 			return "admin/admin_menuInsert";
@@ -83,7 +80,7 @@ public class LoginController {
 		int a = MenuDao.getInstance().deleteMenu(name);
 
 		if (a == 1) {
-			logger.info("삭제 성공");
+			logger.info("메뉴삭제 성공");
 			return "admin/admin_menuDelete";
 		} else
 			return "user/menu_list";
@@ -93,7 +90,7 @@ public class LoginController {
 	public String updatemenu(HttpServletRequest request) {
 		int a = MenuDao.getInstance().updateMenu(request);
 		if (a == 1) {
-			logger.info("수정 성공");
+			logger.info("메뉴수정 성공");
 			return "user/menu_list";
 		} else
 			return "admin/admin_menuModify";
@@ -139,12 +136,6 @@ public class LoginController {
 		} else if ("/menulist.do".equals(url)) {
 			returnUrl = "user/menu_list";
 		}
-//		} else if ("/admin_menuModify".equals(url)) {
-//			returnUrl = "admin/admin_menuModify";
-//
-//		} else if ("/admin_menuModify.do".equals(url)) {
-//			returnUrl = "admin/admin_menuModifyOK";
-//		}
 		return returnUrl;
 	}
 }
