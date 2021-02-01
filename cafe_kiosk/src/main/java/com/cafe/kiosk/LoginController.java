@@ -1,7 +1,10 @@
 package com.cafe.kiosk;
 
+import java.util.ArrayList;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +16,7 @@ import org.springframework.web.util.UrlPathHelper;
 
 import com.model.dao.MenuDao;
 import com.model.dao.OderDao;
+import com.model.dto.MenuDto;
 
 @Controller
 public class LoginController {
@@ -38,8 +42,9 @@ public class LoginController {
 			return "user/menu_list";
 	}
 
-	@RequestMapping(value = { "/admin_menuInsert", "/admin_menuDelete", "/admin_menuModify", "/admin_menuModify.do" })
-	public String admin(HttpServletRequest request) {
+	@RequestMapping(value = { "/admin_menuInsert", "/admin_menuDelete", "/admin_menuModify", "/admin_menuModify.do",
+			"/admin_menuinventory" })
+	public String admin(HttpServletRequest request, HttpSession session) {
 		UrlPathHelper urls = new UrlPathHelper();
 		String url = urls.getOriginatingServletPath(request);
 		String returnUrl = "";
@@ -54,6 +59,9 @@ public class LoginController {
 
 		} else if ("/admin_menuModify.do".equals(url)) {
 			returnUrl = "admin/admin_menuModifyOK";
+
+		} else if ("/admin_menuinventory".equals(url)) {
+			returnUrl = "admin/Inventory_Mangenment";
 		}
 
 		return returnUrl;
@@ -90,6 +98,12 @@ public class LoginController {
 			return "admin/admin_menuModify";
 	}
 
+	@RequestMapping(value = "/inventoryUpdate.do")
+	public String updateinventory(HttpServletRequest request) {
+		MenuDao.getInstance().updateinventory(request);
+		return "admin/Inventory_Mangenment";
+	}
+
 	@RequestMapping(value = "/receiptPrint.do")
 	public String receipPrint(HttpServletRequest request) {
 		String num = request.getParameter("odernum");
@@ -97,7 +111,6 @@ public class LoginController {
 		request.setAttribute("oneOder", oder);
 		return "receiptPrint";
 	}
-	
 
 	@RequestMapping(value = "/deleteOder.do")
 	public String deleteOder(HttpServletRequest request) {
@@ -105,7 +118,7 @@ public class LoginController {
 		OderDao.getInstance().deleteOder(num);
 		return "admin/oderlist";
 	}
-	
+
 	@RequestMapping(value = "/startOder.do")
 	public String startOder(HttpServletRequest request) {
 		String num = request.getParameter("odernum");

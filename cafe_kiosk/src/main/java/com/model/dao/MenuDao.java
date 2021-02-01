@@ -249,4 +249,22 @@ public class MenuDao extends HttpServlet {
 		}
 		return result;
 	}
+
+	public void updateinventory(HttpServletRequest request) {
+		String name[] = request.getParameterValues("menu");
+		String stock[] = request.getParameterValues("stock3");
+		try {
+			getCon();
+			for (int i = 0; i < name.length; i++) {
+				preparedStatement = connection.prepareStatement("update menu set stock=? where name=?");
+				preparedStatement.setString(2, name[i]);
+				preparedStatement.setString(1, stock[i]);
+				preparedStatement.executeUpdate();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
 }
