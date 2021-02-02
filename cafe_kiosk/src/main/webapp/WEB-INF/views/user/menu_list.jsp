@@ -216,6 +216,7 @@ input {
 			<%
 				ArrayList<MenuDto> menuDtos5 = MenuDao.getInstance().allmenuType("dessert");
 			for (MenuDto menuDto : menuDtos5) {
+				if (menuDto.getStock() > 0) {
 			%>
 			<div class="menu">
 				<p>
@@ -233,6 +234,7 @@ input {
 			</div>
 			<%
 				}
+			}
 			%>
 		</div>
 	</div>
