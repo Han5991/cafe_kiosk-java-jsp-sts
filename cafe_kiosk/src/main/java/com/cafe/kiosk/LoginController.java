@@ -38,7 +38,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = { "/admin_menuInsert", "/admin_menuDelete", "/admin_menuModify", "/admin_menuModify.do",
-			"/admin_menuinventory", "/admin_oderlist" })
+			"/admin_menuinventory", "/admin_oderlist", "/admin_oderMagenment" })
 	public String admin(HttpServletRequest request, HttpSession session) {
 		UrlPathHelper urls = new UrlPathHelper();
 		String url = urls.getOriginatingServletPath(request);
@@ -60,6 +60,8 @@ public class LoginController {
 
 		} else if ("/admin_oderlist".equals(url)) {
 			returnUrl = "admin/oderlist";
+		} else if ("/admin_oderMagenment".equals(url)) {
+			returnUrl = "admin/oder_Magenment";
 		}
 
 		return returnUrl;
@@ -69,7 +71,7 @@ public class LoginController {
 	public String insertmenu(HttpServletRequest request) {
 		int a = MenuDao.getInstance().insertMenu(request);
 		if (a == 1) {
-			logger.info("ë©”ë‰´ì‚½ìž… ì„±ê³µ");
+			logger.info("¸Þ´º »ðÀÔ ¼º°ø");
 			return "user/menu_list";
 		} else
 			return "admin/admin_menuInsert";
@@ -80,7 +82,7 @@ public class LoginController {
 		int a = MenuDao.getInstance().deleteMenu(name);
 
 		if (a == 1) {
-			logger.info("ë©”ë‰´ì‚­ì œ ì„±ê³µ");
+			logger.info("¸Þ´º »èÁ¦ ¿Ï·á");
 			return "admin/admin_menuDelete";
 		} else
 			return "user/menu_list";
@@ -90,7 +92,7 @@ public class LoginController {
 	public String updatemenu(HttpServletRequest request) {
 		int a = MenuDao.getInstance().updateMenu(request);
 		if (a == 1) {
-			logger.info("ë©”ë‰´ìˆ˜ì • ì„±ê³µ");
+			logger.info("¸Þ´º ¼öÁ¤ ¿Ï·á");
 			return "user/menu_list";
 		} else
 			return "admin/admin_menuModify";

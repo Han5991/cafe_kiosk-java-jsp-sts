@@ -1,6 +1,6 @@
 <%@page import="com.model.dto.MenuDto"%>
-<%@page import="java.util.ArrayList"%>
 <%@page import="com.model.dao.MenuDao"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>

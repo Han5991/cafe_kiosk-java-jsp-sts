@@ -57,7 +57,7 @@ img {
 	<%@ include file="../navbar_user.jsp"%>
 	<div id="pop">
 		<input type="hidden" name="odernum" value="<%=odernum%>"> <input
-			id="btn-submit" type="submit" value="전송" onclick="javascript:document.location.href='menulist.do'">
+			id="btn-submit" type="submit" value="카드를 뽑아주세요" onclick="javascript:document.location.href='menulist.do'">
 	</div>
 
 	<div class="jumbotron" style="padding: 40px 0 0 0;">
@@ -113,8 +113,7 @@ img {
 							<td>신용카드</td>
 						</tr>
 						<tr>
-							<td>참고사항 - 주문 결제 이후 3분 이내 취소 가능하며, 제품 조리시는 취소 및 환불이 불가능합니다.<br>
-								- 주문 후 기타 문의사항은 소비자 상담전화(080-320-3000)로 연락바랍니다.
+							<td>참고사항 - 주문 결제 이후 3분 이내 취소 가능하며, 제품 조리시는 취소 및 환불이 불가능합니다.
 							</td>
 						</tr>
 					</tbody>

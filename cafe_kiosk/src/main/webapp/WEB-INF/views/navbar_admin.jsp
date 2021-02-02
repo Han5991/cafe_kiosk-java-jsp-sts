@@ -56,7 +56,7 @@ body {
 			<li><a href="admin_menuModify">메뉴 수정</a></li>
 			<li><a href="admin_menuDelete">메뉴 삭제</a></li>
 			<li><a href="admin_menuinventory">메뉴 입고</a></li>
-			<li><a href="admin_oderlist">주문 관리</a></li>
+			<li><a href="admin_oderMagenment">주문 관리</a></li>
 			<li><a href="#">등록 기계 관리</a></li>
 		</ul>
 	</nav>

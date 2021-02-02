@@ -56,7 +56,7 @@ public class OderDao {
 		}
 	}
 
-	public ArrayList<oderlistDto> allOder() {
+	public ArrayList<oderlistDto> allOder(String status) {
 		ArrayList<oderlistDto> alloder = new ArrayList<oderlistDto>();
 		InputStream in = null;
 		Blob menu = null;
@@ -67,8 +67,9 @@ public class OderDao {
 
 		try {
 			getCon();
-			String sql = "SELECT * FROM oder where status='조리전' ORDER BY TO_NUMBER(odernum)";
+			String sql = "SELECT * FROM oder where status=? ORDER BY TO_NUMBER(odernum)";
 			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, status);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				oderlistDto oderlistDto = new oderlistDto();
@@ -143,7 +144,7 @@ public class OderDao {
 		getCon();
 
 		try {
-			String sql = "delete from oder where odernum=?";
+			String sql = "update oder set status= '조리취소' where odernum=?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, odernum);
 			odernum = preparedStatement.executeUpdate();
@@ -181,9 +182,7 @@ public class OderDao {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ObjectOutput c = new ObjectOutputStream(bos);
 			c.writeObject(oderDtos);
-
 			byte[] a = bos.toByteArray();
-
 			Blob b1 = connection.createBlob();
 			b1.setBytes(1, a);
 
@@ -191,7 +190,7 @@ public class OderDao {
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setBlob(1, b1);
 			preparedStatement.setString(2, sum);
-			preparedStatement.setString(3, "주문전");
+			preparedStatement.setString(3, "조리전");
 
 			preparedStatement.executeQuery();
 

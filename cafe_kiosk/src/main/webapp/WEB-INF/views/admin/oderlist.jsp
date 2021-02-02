@@ -54,19 +54,18 @@ footer {
 	<%@ include file="../navbar_admin.jsp"%>
 	<%
 		ArrayList<oderlistDto> alloder = new ArrayList<oderlistDto>();
-	alloder = OderDao.getInstance().allOder();
+	alloder = OderDao.getInstance().allOder("조리전");
 	%>
-	<h1 style="text-align: center;">주문 관리 페이지</h1>
+	<h1 style="text-align: center;">주문 접수 페이지</h1>
 	<hr>
 	<ul id="ul">
 		<%
 			for (oderlistDto oderlistDto : alloder) {
 		%>
 		<li class="oderNum">주문번호 : <%=oderlistDto.getOdernum()%><input
-			name="oderNum" type="hidden" readonly="readonly"
-			value="<%=oderlistDto.getOdernum()%>"> <br> 주문시각 : <%=oderlistDto.getOderdate()%><br>주문상태
-			: <%=oderlistDto.getStatus()%><br> <input type="button"
-			value="주문목록 보기" class="oderdetail">
+			name="oderNum" type="hidden" value="<%=oderlistDto.getOdernum()%>">
+			<br> 주문시각 : <%=oderlistDto.getOderdate()%><br>주문상태 : <%=oderlistDto.getStatus()%><br>
+			<input type="button" value="주문목록 보기" class="oderdetail">
 			<table class="detail">
 				<%
 					for (oderDto dto : oderlistDto.getOderDtos()) {
@@ -85,9 +84,7 @@ footer {
 		<%
 			}
 		%>
-
 	</ul>
-
 	<footer>
 		<input type="button" value="주문 취소" class="btn btn-warning" id="delete"
 			style="font-size: 30px;">&nbsp;&nbsp;<input type="button"

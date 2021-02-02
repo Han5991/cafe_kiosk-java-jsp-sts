@@ -88,7 +88,7 @@ public class MenuDao extends HttpServlet {
 			preparedStatement.setBinaryStream(3, fis, (int) fileNew.length());
 			preparedStatement.setString(4, fileNew.getName());
 			rownum = preparedStatement.executeUpdate();
-			System.out.println("삽입성공");
+			System.out.println("�궫�엯�꽦怨�");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -240,7 +240,7 @@ public class MenuDao extends HttpServlet {
 				update = f.delete();
 
 			if (rownum > 0 && update == true) {
-				System.out.println("수정 성공");
+				System.out.println("�닔�젙 �꽦怨�");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
