@@ -17,6 +17,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.model.dto.oderDto;
 import com.model.dto.oderlistDto;
 
@@ -56,6 +58,7 @@ public class OderDao {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public ArrayList<oderlistDto> allOder(String status) {
 		ArrayList<oderlistDto> alloder = new ArrayList<oderlistDto>();
 		InputStream in = null;
@@ -174,8 +177,17 @@ public class OderDao {
 		}
 		return odernum;
 	}
-	
+
 	public int insertOder(ArrayList<oderDto> oderDtos, String sum) {
+		JsonObject jsonObject = new JsonObject();
+		for (oderDto oder : oderDtos) {
+			jsonObject.addProperty("munu", oder.getMenu());
+			jsonObject.addProperty("quantity", oder.getQuantity());
+			jsonObject.addProperty("price", oder.getPrice());
+		}
+		JsonArray jsonArray = new JsonArray();
+		jsonArray.add(jsonObject);
+		System.out.println(jsonArray.get(0).toString());
 		int result = 0;
 		try {
 			getCon();
