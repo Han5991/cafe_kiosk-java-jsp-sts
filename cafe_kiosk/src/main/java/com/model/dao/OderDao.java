@@ -12,11 +12,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.model.dto.oderDto;
@@ -179,15 +182,25 @@ public class OderDao {
 	}
 
 	public int insertOder(ArrayList<oderDto> oderDtos, String sum) {
-		JsonObject jsonObject = new JsonObject();
-		for (oderDto oder : oderDtos) {
-			jsonObject.addProperty("munu", oder.getMenu());
-			jsonObject.addProperty("quantity", oder.getQuantity());
-			jsonObject.addProperty("price", oder.getPrice());
+
+		JsonArray menus = new JsonArray();
+		JsonArray quantitys = new JsonArray();
+		JsonArray prices = new JsonArray();
+		
+		for(oderDto dto : oderDtos) {
+			menus.add(dto.getMenu());
+			quantitys.add(dto.getQuantity());
+			prices.add(dto.getPrice());
 		}
-		JsonArray jsonArray = new JsonArray();
-		jsonArray.add(jsonObject);
-		System.out.println(jsonArray.get(0).toString());
+		
+		JsonObject oderObject = new JsonObject();
+		oderObject.add("name", menus);
+		oderObject.add("quantitys", quantitys);
+		oderObject.add("prices", prices);
+		
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		String oderOutput = gson.toJson(oderObject);
+		System.out.println(oderOutput);
 		int result = 0;
 		try {
 			getCon();
