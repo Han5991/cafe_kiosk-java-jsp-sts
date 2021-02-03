@@ -12,8 +12,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -246,7 +244,23 @@ public class OderDao {
 			Blob b1 = connection.createBlob();
 			b1.setBytes(1, a);
 
-			String sql = "insert into oder values(seq_oder.NEXTVAL,?,to_char(sysdate,'mm.dd hh24:mi'),?,?)";
+			String sql = "SELECT name FROM menu where stock>0";
+			preparedStatement = connection.prepareStatement(sql);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				String menu = resultSet.getString(1);
+				for (oderDto dto : oderDtos) {
+					if (dto.getMenu().equals(menu)) {
+						sql = "update menu set stock=stock-? where name=?";
+						preparedStatement = connection.prepareStatement(sql);
+						preparedStatement.setString(1, dto.getQuantity());
+						preparedStatement.setString(2, dto.getMenu());
+						preparedStatement.executeUpdate();
+					}
+				}
+			}
+
+			sql = "insert into oder values(seq_oder.NEXTVAL,?,to_char(sysdate,'mm.dd hh24:mi'),?,?)";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setBlob(1, b1);
 			preparedStatement.setString(2, sum);
