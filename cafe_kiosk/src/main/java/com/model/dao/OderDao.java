@@ -145,18 +145,57 @@ public class OderDao {
 
 	public int deleteOder(String num) {
 		int odernum = Integer.parseInt(num);
+		InputStream in = null;
+		Blob menu = null;
+		int s = 0;
+		byte[] buffer = null;
+		ObjectInputStream ois = null;
+		ArrayList<oderDto> oderDtos = null;
+		ArrayList<String> name = new ArrayList<String>();
 		getCon();
 
 		try {
-			String sql = "update oder set status= '조리취소' where odernum=?";
+			String sql = "select oder from oder where odernum=?";
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, num);
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+				menu = resultSet.getBlob(1);
+				in = menu.getBinaryStream();
+				s = (int) menu.length();
+				buffer = new byte[s];
+				in.read(buffer, 0, s);
+				ois = new ObjectInputStream(new ByteArrayInputStream(buffer));
+				oderDtos = (ArrayList<oderDto>) ois.readObject();
+			}
+
+			sql = "SELECT name FROM menu where stock>0";
+			preparedStatement = connection.prepareStatement(sql);
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next())
+				name.add(resultSet.getString(1));
+
+			for (oderDto dto : oderDtos) {
+				for (String a : name)
+					if (a.equals(dto.getMenu())) {
+						sql = "update menu set stock=stock+? where name=?";
+						preparedStatement = connection.prepareStatement(sql);
+						preparedStatement.setString(1, dto.getQuantity());
+						preparedStatement.setString(2, dto.getMenu());
+						resultSet = preparedStatement.executeQuery();
+					}
+			}
+
+			sql = "update oder set status= '조리취소' where odernum=?";
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, odernum);
 			odernum = preparedStatement.executeUpdate();
 
-			connection.close();
-			preparedStatement.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 		return odernum;
 	}
