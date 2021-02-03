@@ -41,9 +41,9 @@ public class showImage extends HttpServlet {
 
 		final String sql = " SELECT img FROM menu WHERE name = '"+key1+"'";
 		try {
-			context = new InitialContext();// ���α׷�
+			context = new InitialContext();
 			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/Oracle11g");
-			con = dataSource.getConnection();// ����
+			con = dataSource.getConnection();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -54,8 +54,7 @@ public class showImage extends HttpServlet {
 			while (resultSet != null && resultSet.next()) {
 				is = resultSet.getBinaryStream("img");
 			}
-			response.setContentType("jpg"); // Content Type Set
-			// Image�� Stream�� ���� out
+			response.setContentType("jpg");
 			ServletOutputStream os = response.getOutputStream();
 			int binaryRead;
 			while ((binaryRead = is.read()) != -1) {

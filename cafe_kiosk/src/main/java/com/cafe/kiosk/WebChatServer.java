@@ -32,7 +32,7 @@ public class WebChatServer extends HttpServlet {
 		message = OderDao.getInstance().getOneOder(message);
 		synchronized (users) {
 //			WebChatServer.session.getBasicRemote().sendText( message+ ","+userName);
-			WebChatServer.session.getBasicRemote().sendText( message);
+			WebChatServer.session.getBasicRemote().sendText(message);
 //			Iterator<Session> it = users.keySet().iterator();
 //			while (it.hasNext()) {
 //				Session currentSession = it.next();
@@ -54,7 +54,7 @@ public class WebChatServer extends HttpServlet {
 		System.out.println(session + " connect");
 
 		users.put(session, client);
-//		sendNotice(client.getName() + "님이 입장하셨습니다. 현재 사용자 " + users.size() + "명");
+//		sendNotice(client.getName() + "님이 입장 하셨습니다 현재 사용자 수 : " + users.size() + "紐�");
 	}
 
 //	public void sendNotice(String message) {
@@ -78,7 +78,7 @@ public class WebChatServer extends HttpServlet {
 	public void onClose(Session session) {
 		String userName = users.get(session).getName();
 		users.remove(session);
-//		sendNotice(userName + "님이 퇴장하셨습니다. 현재 사용자 " + users.size() + "명");
+//		sendNotice(userName + "님이 입장 하셨습니다 현재 사용자 수 : " + users.size() + "명");
 	}
 
 }

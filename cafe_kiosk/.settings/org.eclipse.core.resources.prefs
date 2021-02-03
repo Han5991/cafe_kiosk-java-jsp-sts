@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/java/com/cafe/kiosk/WebChatServer.java=UTF-8
 encoding//src/main/java/com/cafe/kiosk/gson.java=UTF-8
 encoding//src/main/java/com/model/dao/MenuDao.java=UTF-8
 encoding//src/main/java/com/model/dao/OderDao.java=UTF-8
