@@ -101,7 +101,8 @@ footer {
 		ArrayList<oderlistDto> alloder = new ArrayList<oderlistDto>();
 	alloder = OderDao.getInstance().allOder("조리전");
 	%>
-	<h1 style="text-align: center;">
+	<h1
+		style="text-align: center; font-family: hzStyleFont; font-size: 25px; font-weight: bold;">
 		주문 접수 페이지 <select id="status">
 			<option>전체보기</option>
 			<option value="주문전">주문전</option>

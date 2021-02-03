@@ -56,7 +56,8 @@ footer {
 		ArrayList<oderlistDto> alloder = new ArrayList<oderlistDto>();
 	alloder = OderDao.getInstance().allOder("조리전");
 	%>
-	<h1 style="text-align: center;">주문 접수 페이지</h1>
+	<h1 style="text-align: center; font-family: hzStyleFont; font-size: 25px; font-weight: bold;">주문 접수
+		페이지</h1>
 	<hr>
 	<ul id="ul">
 		<%

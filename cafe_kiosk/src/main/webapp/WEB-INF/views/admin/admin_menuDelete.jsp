@@ -33,9 +33,8 @@ img {
 	<!-- Navigation -->
 	<%@ include file="../navbar_admin.jsp"%>
 
-	<h1>관리자 페이지</h1>
+	<h1 style="text-align: center;">메뉴 삭제 페이지</h1>
 	<hr>
-	<h3>메뉴 삭제</h3>
 	<div style="margin: 0 auto;">
 		<%
 			ArrayList<MenuDto> menuDtos = MenuDao.getInstance().allmenu();

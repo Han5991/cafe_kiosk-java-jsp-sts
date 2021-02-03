@@ -181,26 +181,61 @@ public class OderDao {
 		return odernum;
 	}
 
+//
+//	public int insertOder(ArrayList<oderDto> oderDtos, String sum) {
+//
+//		JsonArray menus = new JsonArray();
+//		JsonArray quantitys = new JsonArray();
+//		JsonArray prices = new JsonArray();
+//		
+//		for(oderDto dto : oderDtos) {
+//			menus.add(dto.getMenu());
+//			quantitys.add(dto.getQuantity());
+//			prices.add(dto.getPrice());
+//		}
+//		
+//		JsonObject oderObject = new JsonObject();
+//		oderObject.add("name", menus);
+//		oderObject.add("quantitys", quantitys);
+//		oderObject.add("prices", prices);
+//		
+//		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//		String oderOutput = gson.toJson(oderObject);
+//		int result = 0;
+//		try {
+//			getCon();
+//			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//			ObjectOutput c = new ObjectOutputStream(bos);
+//			c.writeObject(oderDtos);
+//			byte[] a = bos.toByteArray();
+//			Blob b1 = connection.createBlob();
+//			b1.setBytes(1, a);
+//
+//			String sql = "insert into oderJSON values(seq_oder.NEXTVAL,?,to_char(sysdate,'mm.dd hh24:mi'),?,?)";
+//			preparedStatement = connection.prepareStatement(sql);
+//			preparedStatement.setString(1, oderOutput);
+//			preparedStatement.setString(2, sum);
+//			preparedStatement.setString(3, "조리전");
+//
+//			preparedStatement.executeQuery();
+//
+//			sql = "SELECT MAX(TO_NUMBER(odernum)) FROM oder";
+//			preparedStatement = connection.prepareStatement(sql);
+//
+//			resultSet = preparedStatement.executeQuery();
+//			while (resultSet.next())
+//				result = resultSet.getInt(1);
+//
+//			preparedStatement = connection.prepareStatement(sql);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} finally {
+//			close();
+//		}
+//		return result;
+//	}
+//	
 	public int insertOder(ArrayList<oderDto> oderDtos, String sum) {
-
-		JsonArray menus = new JsonArray();
-		JsonArray quantitys = new JsonArray();
-		JsonArray prices = new JsonArray();
-		
-		for(oderDto dto : oderDtos) {
-			menus.add(dto.getMenu());
-			quantitys.add(dto.getQuantity());
-			prices.add(dto.getPrice());
-		}
-		
-		JsonObject oderObject = new JsonObject();
-		oderObject.add("name", menus);
-		oderObject.add("quantitys", quantitys);
-		oderObject.add("prices", prices);
-		
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		String oderOutput = gson.toJson(oderObject);
-		System.out.println(oderOutput);
 		int result = 0;
 		try {
 			getCon();
@@ -225,8 +260,6 @@ public class OderDao {
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next())
 				result = resultSet.getInt(1);
-
-			preparedStatement = connection.prepareStatement(sql);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

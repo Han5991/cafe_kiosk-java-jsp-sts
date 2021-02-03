@@ -35,10 +35,8 @@ img {
 	<!-- Navigation -->
 	<%@ include file="../navbar_admin.jsp"%>
 
-	<h1>관리자 페이지</h1>
+	<h1 style="text-align: center;">메뉴 추가 페이지</h1>
 	<hr>
-
-	<h3>메뉴 추가</h3>
 	<form action="admin_menuInsert.do" id="form" method="post"
 		enctype="multipart/form-data">
 		<div style="margin: 0 auto;">
