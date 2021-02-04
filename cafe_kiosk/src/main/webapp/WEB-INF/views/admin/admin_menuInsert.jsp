@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <style>
-#form {
+form {
 	width: 500px;
 	height: 800px;
 	border: 3px solid lightgray;
@@ -37,7 +37,7 @@ img {
 
 	<h1 style="text-align: center;">메뉴 추가 페이지</h1>
 	<hr>
-	<form action="admin_menuInsert.do" id="form" method="post"
+	<form action="admin_menuInsert.do" name="reg_frm" method="post"
 		enctype="multipart/form-data">
 		<div style="margin: 0 auto;">
 			<p>
@@ -91,7 +91,7 @@ img {
 		}
 	}
 	function infoConfirm() {
-		if (document.reg_frm.type.value == "type") {
+		if (document.reg_frm.category.value == "type") {
 			alert("타입은 필수 사항입니다.");
 			reg_frm.type.focus();
 			return;
