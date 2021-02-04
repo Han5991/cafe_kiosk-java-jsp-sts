@@ -88,7 +88,6 @@ public class MenuDao extends HttpServlet {
 			preparedStatement.setBinaryStream(3, fis, (int) fileNew.length());
 			preparedStatement.setString(4, fileNew.getName());
 			rownum = preparedStatement.executeUpdate();
-			System.out.println("�궫�엯�꽦怨�");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

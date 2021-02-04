@@ -234,6 +234,10 @@ img {
 	%>
 </body>
 <script type="text/javascript">
+	if(<%= odernum%>==0){
+		alert("결제에 실패하였습니다.");
+		history.back();
+	}
 	var webSocket = new WebSocket('ws://localhost:8080/webChatServer');
 	webSocket.onerror = function(e) {
 		onError(e);

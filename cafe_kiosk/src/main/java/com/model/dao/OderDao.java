@@ -143,15 +143,15 @@ public class OderDao {
 		return oder;
 	}
 
+	@SuppressWarnings("unchecked")
 	public int deleteOder(String num) {
-		int odernum = Integer.parseInt(num);
-		InputStream in = null;
 		Blob menu = null;
-		int s = 0;
 		byte[] buffer = null;
+		InputStream in = null;
 		ObjectInputStream ois = null;
 		ArrayList<oderDto> oderDtos = null;
 		ArrayList<String> name = new ArrayList<String>();
+		int s = 0, odernum = Integer.parseInt(num);
 		getCon();
 
 		try {
@@ -183,7 +183,7 @@ public class OderDao {
 						preparedStatement = connection.prepareStatement(sql);
 						preparedStatement.setString(1, dto.getQuantity());
 						preparedStatement.setString(2, dto.getMenu());
-						resultSet = preparedStatement.executeQuery();
+						preparedStatement.executeQuery();
 					}
 			}
 
@@ -209,11 +209,10 @@ public class OderDao {
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, odernum);
 			odernum = preparedStatement.executeUpdate();
-
-			connection.close();
-			preparedStatement.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 		return odernum;
 	}
