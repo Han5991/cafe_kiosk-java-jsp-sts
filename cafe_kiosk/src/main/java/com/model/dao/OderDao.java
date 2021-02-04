@@ -170,7 +170,7 @@ public class OderDao {
 				oderDtos = (ArrayList<oderDto>) ois.readObject();
 			}
 
-			sql = "SELECT name FROM menu where stock>0";
+			sql = "SELECT name FROM menu where imgname LIKE 'dessert%'";
 			preparedStatement = connection.prepareStatement(sql);
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next())

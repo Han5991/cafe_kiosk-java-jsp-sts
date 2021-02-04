@@ -49,7 +49,7 @@ table {
 	<!-- Navigation -->
 	<%@ include file="../navbar_user.jsp"%>
 	<span> 총 합계 금액 : <br><%=sum%>원 <br> <br> <input
-		type="reset" value="메뉴 추가하기" style="font-size: 30px;"><br>
+		type="button" value="메뉴 다시선택" style="font-size: 30px;" onclick="back();"><br>
 		<br> <input type="button" value="주문 하기" style="font-size: 30px;"
 		onclick="go();"></span>
 	<table>
@@ -81,6 +81,9 @@ table {
 <script type="text/javascript">
 	function go() {
 		location.href = "oder.do";
+	}
+	function back() {
+		history.back();
 	}
 </script>
 </html>
