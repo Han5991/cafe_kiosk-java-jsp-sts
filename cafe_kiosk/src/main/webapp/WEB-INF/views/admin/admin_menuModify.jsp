@@ -19,7 +19,6 @@
 
 .menu {
 	width: 200px;
-	height: 300px;
 	border: 1px solid lightgray;
 	border-radius: 10px;
 	margin: 30px;
@@ -36,7 +35,7 @@ img {
 }
 </style>
 </head>
-<body>
+<body style="text-align: center;">
 
 	<!-- Navigation -->
 	<%@ include file="../navbar_admin.jsp"%>
