@@ -239,7 +239,7 @@ public class MenuDao extends HttpServlet {
 				update = f.delete();
 
 			if (rownum > 0 && update == true) {
-				System.out.println("�닔�젙 �꽦怨�");
+				System.out.println("메뉴 수정 성공");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

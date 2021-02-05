@@ -156,68 +156,6 @@ img {
 				</table>
 			</div>
 		</div>
-
-	</div>
-
-	<div class="jumbotron" style="padding: 50px 0 0 0;">
-		<div class="container text-center">
-			<table class="table">
-				<thead style="font-size: 30px;">
-					<tr>
-						<td style="font-size: 30px;">수령 매장 정보</td>
-					</tr>
-				</thead>
-			</table>
-		</div>
-	</div>
-
-	<div style="padding: 0 0 0 0; margin: 0 auto; width: 50%;">
-		<div class="jumbotron" style="float: left; width: 50%">
-			<div class="container text-center">
-				<table class="table">
-					<thead style="font-size: 30px;">
-						<tr>
-							<td><sup><span class="glyphicon glyphicon-stop"></span>매장
-									정보</sup></td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>매장 이름</td>
-							<td>${storeId.storeName}</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>매장 주소</td>
-							<td>${storeId.storeAddress}</td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>전화 번호</td>
-							<td>${storeId.storePhone}</td>
-							<td></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<div class="jumbotron" style="float: left; width: 50%">
-			<div class="container text-center">
-				<table class="table">
-					<thead style="font-size: 30px;">
-						<tr>
-							<td><sup><span class="glyphicon glyphicon-stop"></span>주문
-									요청 사항</sup></td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>${param.DOC_TEXT}</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
 	</div>
 
 	<div class="jumbotron">
@@ -234,7 +172,7 @@ img {
 	%>
 </body>
 <script type="text/javascript">
-	if(<%= odernum%>==0){
+	if(<%=odernum%>==0){
 		alert("결제에 실패하였습니다.");
 		history.back();
 	}
