@@ -64,7 +64,6 @@ public class WebChatServer extends HttpServlet {
 	}
 
 }
-}
 ```
 관리자의 웹소켓 접속 
 ```swift
