@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-@WebServlet("/showImage")
+//@WebServlet("/showImage")
 public class showImage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

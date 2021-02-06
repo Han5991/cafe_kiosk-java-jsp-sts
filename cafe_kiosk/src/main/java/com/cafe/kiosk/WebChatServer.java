@@ -8,6 +8,7 @@ import javax.websocket.server.ServerEndpoint;
 import org.springframework.stereotype.Controller;
 
 import com.model.dao.OderDao;
+import com.model.dto.ClientDto;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -23,7 +24,7 @@ import javax.websocket.Session;
 public class WebChatServer extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private static Map<Session, ChatClient> users = Collections.synchronizedMap(new HashMap<Session, ChatClient>());
+	private static Map<Session, ClientDto> users = Collections.synchronizedMap(new HashMap<Session, ClientDto>());
 	private static Session session;
 
 	@OnMessage
@@ -45,9 +46,9 @@ public class WebChatServer extends HttpServlet {
 	@OnOpen
 	public void onOpen(Session session) {
 
-		ChatClient client = new ChatClient();
+		ClientDto client = new ClientDto();
 
-		client.setName(ChatClient.getinstance().getName());
+		client.setName(ClientDto.getinstance().getName());
 		if (client.getName().equals("admin"))
 			WebChatServer.session = session;
 

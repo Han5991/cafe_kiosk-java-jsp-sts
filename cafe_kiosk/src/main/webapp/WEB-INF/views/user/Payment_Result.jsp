@@ -57,7 +57,8 @@ img {
 	<%@ include file="../navbar_user.jsp"%>
 	<div id="pop">
 		<input type="hidden" name="odernum" value="<%=odernum%>"> <input
-			id="btn-submit" type="submit" value="카드를 뽑아주세요" onclick="javascript:document.location.href='menulist.do'">
+			id="btn-submit" type="submit" value="카드를 뽑아주세요"
+			onclick="javascript:document.location.href='menulist.do'">
 	</div>
 
 	<div class="jumbotron" style="padding: 40px 0 0 0;">
@@ -172,7 +173,9 @@ img {
 	%>
 </body>
 <script type="text/javascript">
-	if(<%=odernum%>==0){
+	if (
+<%=odernum%>
+	== 0) {
 		alert("결제에 실패하였습니다.");
 		history.back();
 	}

@@ -1,6 +1,10 @@
 package com.cafe.kiosk;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,6 +17,7 @@ import org.springframework.web.util.UrlPathHelper;
 
 import com.model.dao.MenuDao;
 import com.model.dao.OderDao;
+import com.model.dto.ClientDto;
 import com.model.dto.MenuDto;
 
 @Controller
@@ -29,7 +34,7 @@ public class LoginController {
 	public String loginProcess(@RequestParam String id, HttpServletRequest request) {
 
 		logger.info("Welcome " + id);
-		ChatClient.getinstance().setName(id);
+		ClientDto.getinstance().setName(id);
 
 		if (id.equals("admin"))
 			return "admin/oderlist";
@@ -124,6 +129,11 @@ public class LoginController {
 		String num = request.getParameter("odernum");
 		OderDao.getInstance().startOder(num);
 		return "admin/oderlist";
+	}
+
+	@RequestMapping(value = "/showImage")
+	public void showImage(HttpServletRequest request, HttpServletResponse response){
+		MenuDao.getInstance().showImage(request, response);
 	}
 
 	@RequestMapping(value = { "/Cart.do", "/oder.do", "/menulist.do" })

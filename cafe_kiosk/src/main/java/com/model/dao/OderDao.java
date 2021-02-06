@@ -272,7 +272,7 @@ public class OderDao {
 //	}
 //	
 	public int insertOder(ArrayList<oderDto> oderDtos, String sum) {
-		int result = 0;
+		int odernum = 0;
 		try {
 			getCon();
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -311,12 +311,12 @@ public class OderDao {
 
 			resultSet = preparedStatement.executeQuery();
 			while (resultSet.next())
-				result = resultSet.getInt(1);
+				odernum = resultSet.getInt(1);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
-		return result;
+		return odernum;
 	}
 }

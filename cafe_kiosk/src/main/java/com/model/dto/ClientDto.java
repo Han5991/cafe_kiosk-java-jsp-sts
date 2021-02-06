@@ -1,11 +1,11 @@
-package com.cafe.kiosk;
+package com.model.dto;
 
 import javax.websocket.Session;
 
-public class ChatClient {
+public class ClientDto {
 	private String name;
 	private Session session;
-	private static ChatClient instance = new ChatClient();
+	private static ClientDto instance = new ClientDto();
 
 	public Session getSession() {
 		return session;
@@ -15,10 +15,10 @@ public class ChatClient {
 		this.session = session;
 	}
 
-	public ChatClient() {
+	public ClientDto() {
 	}
 
-	public static ChatClient getinstance() {
+	public static ClientDto getinstance() {
 		return instance;
 	}
 
