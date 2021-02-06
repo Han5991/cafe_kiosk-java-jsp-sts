@@ -16,8 +16,7 @@ websoket for README.md
 ---
 
 
-# 10. 코드블럭 추가하기
-웹소켓을 이용한 코드 
+# 2. 웹소켓을 이용한 코드
 ```swift
 @Controller
 @ServerEndpoint(value = "/webChatServer")
