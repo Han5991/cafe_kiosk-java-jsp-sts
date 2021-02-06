@@ -2,7 +2,12 @@
 websoket for README.md
 
 
-# cafe_kiosk(websoket)
+# 0. 기술 스택
+
+java:1.8
+tomcat : 9.0
+oracle 11g
+jsp : 4.0
 
 # 1. 사용방법
 1. admin 계정으로 접속시 나오는 화면
