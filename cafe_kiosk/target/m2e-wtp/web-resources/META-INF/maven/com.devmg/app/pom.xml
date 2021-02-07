@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.devmg</groupId>
 	<artifactId>app</artifactId>
-	<name>SimpleChat</name>
+	<name>cafe_kiosk</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>

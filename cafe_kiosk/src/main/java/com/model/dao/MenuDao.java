@@ -271,26 +271,17 @@ public class MenuDao extends HttpServlet {
 	}
 
 	public void showImage(HttpServletRequest request, HttpServletResponse response) {
-		Context context = null;
-		DataSource dataSource = null;
 		Connection con = null;
 		PreparedStatement stmt = null;
-		ResultSet resultSet = null;
 		InputStream is = null;
-		String key1 = request.getParameter("key1");
-
-		final String sql = " SELECT img FROM menu WHERE name = '" + key1 + "'";
 		try {
-			context = new InitialContext();
-			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/Oracle11g");
+			Context context = new InitialContext();
+			DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/Oracle11g");
 			con = dataSource.getConnection();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
-		try {
-			stmt = con.prepareStatement(sql);
-			resultSet = stmt.executeQuery();
+			stmt = con.prepareStatement("SELECT img FROM menu WHERE name=?");
+			stmt.setString(1, request.getParameter("key1"));
+			ResultSet resultSet = stmt.executeQuery();
 			while (resultSet != null && resultSet.next()) {
 				is = resultSet.getBinaryStream("img");
 			}

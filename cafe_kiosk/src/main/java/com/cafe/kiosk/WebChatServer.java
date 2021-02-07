@@ -33,13 +33,12 @@ public class WebChatServer extends HttpServlet {
 		message = OderDao.getInstance().getOneOder(message);
 		synchronized (users) {
 //			WebChatServer.session.getBasicRemote().sendText( message+ ","+userName);
-			WebChatServer.session.getBasicRemote().sendText(message);
-//			Iterator<Session> it = users.keySet().iterator();
-//			while (it.hasNext()) {
-//				Session currentSession = it.next();
-//				if (users.get(currentSession).getName().equals("admin"))
-//					currentSession.getBasicRemote().sendText(userName + " : " + message);
-//			}
+//			WebChatServer.session.getBasicRemote().sendText(message);
+			Iterator<Session> it = users.keySet().iterator();
+			while (it.hasNext()) {
+				Session currentSession = it.next();
+				currentSession.getBasicRemote().sendText(message);
+			}
 		}
 	}
 

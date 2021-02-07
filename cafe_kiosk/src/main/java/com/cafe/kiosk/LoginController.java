@@ -131,7 +131,7 @@ public class LoginController {
 		return "admin/oderlist";
 	}
 
-	@RequestMapping(value = "/showImage")
+	@RequestMapping(value = "/showImage")//spring으로 옮길 때 한 쿼리문에서 전부 다룰 수 있게 해보자
 	public void showImage(HttpServletRequest request, HttpServletResponse response){
 		MenuDao.getInstance().showImage(request, response);
 	}
